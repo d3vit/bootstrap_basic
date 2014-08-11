@@ -1,0 +1,43 @@
+/*
+Theme Name: Base Theme (Bootstrap)
+Theme URI: http://www.d3vit.com
+Description: Wordpress theme for personal website.
+Version: 1.0
+Author: Ryan Allen
+Author URI: http://www.d3vit.com
+*/
+
+*{margin:0;padding:0;}
+
+body {
+	font-family: 'Open Sans', sans-serif;	
+	font-size: 14px;
+}
+
+/* GENERAL STYLES */
+a img {
+	border: none;	
+}
+
+.aligncenter {
+	display: block;
+	margin: 0 auto;
+	text-align: center;	
+}
+
+.alignleft {
+	float: left;
+	margin: 10px 10px 10px 0;	
+}
+
+.alignright {
+	float: right;
+	margin: 10px 0 10px 10px;	
+}
+
+td {
+	vertical-align:top;	
+}
+
+/* END GENERAL STYLES */
+

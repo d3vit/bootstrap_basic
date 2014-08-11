@@ -1,0 +1,1 @@
+All items herein are to be used under the GPL license.
