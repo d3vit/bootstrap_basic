@@ -1,3 +1,9 @@
+For those of you who use <a title="Bootstrap by Twitter" href="http://getbootstrap.com/" target="_blank">Bootstrap</a> (and you really, really should) I have compiled a basic template to get you started when creating a new WordPress site.
+
+For folks who don't know what Bootstrap is, it is a basic prototyping framework that you can quickly build responsive websites on top of. It has the ability to save you a <strong>LOT</strong> of time when standing up new sites and comes with some pretty powerful functionality.
+
+For more information on how to get started if you've never used Bootstrap, check out their <a href="http://getbootstrap.com/getting-started/#examples" target="_blank">getting started guide</a> examples.
+
 <h1>Features</h1>
 
 <ul>
