@@ -1,5 +1,9 @@
 <?php
 
+require("lib/const.php");
+require("lib/admin/options/options-init.php");
+require("lib/functions/theme-options.php");
+
 add_theme_support( 'automatic-feed-links' );
 
 if ( function_exists('register_sidebar') ) {
