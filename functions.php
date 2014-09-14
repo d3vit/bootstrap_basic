@@ -57,6 +57,21 @@ function add_first_and_last($output) {
 }
 add_filter('wp_nav_menu', 'add_first_and_last');
 
+
+function custom_scripts_loading() {
+    // Deregister the included library
+    wp_deregister_script( 'jquery' );
+     
+    // Register the library again from Google's CDN
+    wp_register_script( 'jquery', 'https://code.jquery.com/jquery-1.10.2.min.js', array(), null, false );
+
+    // Register custom scripts
+    wp_register_script( 'bootstrap', get_template_directory_uri() . '/js/bootstrap.min.js', array( 'jquery' ) );
+	wp_register_script( 'custom-script', get_template_directory_uri() . '/js/site-wide.js', array( 'jquery' ) );
+
+}
+add_action( 'wp_enqueue_scripts', 'custom_scripts_loading' );
+
 register_nav_menu( 'primary', 'Primary Menu' );
 register_nav_menu( 'secondary', 'Secondary Menu' );
 

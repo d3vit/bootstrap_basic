@@ -24,11 +24,6 @@
 
 	wp_footer();
 	?>
-  <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
-	<!--main bootstrap js-->
-  <script src="<?php bloginfo('template_url');?>/js/bootstrap.min.js" type="text/javascript"></script>
-  <!--sitewide js-->
-  <script src="<?php bloginfo('template_url');?>/js/site-wide.js" type="text/javascript"></script>
 
 </body>
 </html>
