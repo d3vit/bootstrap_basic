@@ -9,7 +9,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
     <meta name="keywords" content="<?php echo $keywords_meta; ?>" />
-    <meta name="author" content="Kyle Kanouse" />
+    <meta name="author" content="" />
     
     <title><?php if (is_front_page()) : echo bloginfo( 'name' ) . ' | '; echo bloginfo( 'description'); else: wp_title(""); echo ' | '; echo bloginfo( 'name' ); endif; ?></title>
 
