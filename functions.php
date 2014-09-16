@@ -68,6 +68,10 @@ function custom_scripts_loading() {
     // Register custom scripts
     wp_register_script( 'bootstrap', get_template_directory_uri() . '/js/bootstrap.min.js', array( 'jquery' ) );
 	wp_register_script( 'custom-script', get_template_directory_uri() . '/js/site-wide.js', array( 'jquery' ) );
+	
+	//Enqueue scripts
+	wp_enqueue_script( 'bootstrap' );
+	wp_enqueue_script( 'custom-script' );
 
 }
 add_action( 'wp_enqueue_scripts', 'custom_scripts_loading' );
