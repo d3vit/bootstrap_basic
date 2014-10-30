@@ -1,20 +1,20 @@
 <?php
 
 // take the content of a contact-form shortcode and parse it into a list of field types
-function bootstrap_basic_contact_form_parse( $content ) {
+function lrl_contact_form_parse( $content ) {
 	// first parse all the contact-field shortcodes into an array
-	global $bootstrap_basic_contact_form_fields, $bootstrap_basic_form_form;
-	$bootstrap_basic_contact_form_fields = array();
+	global $lrl_contact_form_fields, $lrl_form_form;
+	$lrl_contact_form_fields = array();
 
 	$out = do_shortcode( $content );
 	
-	if ( empty($bootstrap_basic_contact_form_fields) || !is_array($bootstrap_basic_contact_form_fields) ) {
+	if ( empty($lrl_contact_form_fields) || !is_array($lrl_contact_form_fields) ) {
 		// default form: same as the original Grunion form
 		$default_form = '
 		[contact-field label="'.__( 'Name', 'bootstrap' ).'" type="name" required="true" /]
 		[contact-field label="'.__( 'Email', 'bootstrap' ).'" type="email" required="true" /]
 		[contact-field label="'.__( 'Website', 'bootstrap' ).'" type="url" /]';
-		if ( 'yes' == strtolower($bootstrap_basic_form_form->show_subject) ) {
+		if ( 'yes' == strtolower($lrl_form_form->show_subject) ) {
 			$default_form .= '
 			[contact-field label="'.__( 'Subject', 'bootstrap' ).'" type="subject" /]';
 		}
@@ -27,8 +27,8 @@ function bootstrap_basic_contact_form_parse( $content ) {
 	return $out;
 }
 
-function bootstrap_basic_contact_form_render_field( $field ) {
-	global $contact_form_last_id, $contact_form_errors, $bootstrap_basic_contact_form_fields, $current_user, $user_identity;
+function lrl_contact_form_render_field( $field ) {
+	global $contact_form_last_id, $contact_form_errors, $lrl_contact_form_fields, $current_user, $user_identity;
 	
 	$r = '';
 	
@@ -56,7 +56,7 @@ function bootstrap_basic_contact_form_render_field( $field ) {
 
 	if ( $field['type'] == 'email' ) {
 		$r .= "\n<div class='input-text-block'>\n";
-		$r .= "\t\t<label for='".esc_attr($field_id)."' class='bootstrap_basic_form-field-label ".esc_attr($field['type']) . ( contact_form_is_error($field_id) ? ' form-error' : '' ) . "'>" . htmlspecialchars( $field['label'] ) . ( $field['required'] ? '<span class="required">&nbsp;*</span>' : '' ) . "</label>\n";
+		$r .= "\t\t<label for='".esc_attr($field_id)."' class='lrl_form-field-label ".esc_attr($field['type']) . ( contact_form_is_error($field_id) ? ' form-error' : '' ) . "'>" . htmlspecialchars( $field['label'] ) . ( $field['required'] ? '<span class="required">&nbsp;*</span>' : '' ) . "</label>\n";
 		$r .= "\t\t<input type='text' name='".esc_attr($field_id)."' id='".esc_attr($field_id)."' value='".esc_attr($field_value)."' class='".esc_attr($field['type'])."'/>\n";
 		$r .= "\t</div>\n";
 	} elseif ( $field['type'] == 'textarea' ) {
@@ -104,7 +104,7 @@ function bootstrap_basic_contact_form_render_field( $field ) {
 	return $r;
 }
 
-function bootstrap_basic_contact_form_validate_field( $field ) {
+function lrl_contact_form_validate_field( $field ) {
 	global $contact_form_last_id, $contact_form_errors, $contact_form_values;
 
 	$field_id = $field['id'];
@@ -138,8 +138,8 @@ function contact_form_is_error( $field_id ) {
 
 // generic shortcode that handles all of the major input types
 // this parses the field attributes into an array that is used by other functions for rendering, validation etc
-function bootstrap_basic_contact_form_field( $atts, $content, $tag ) {
-	global $bootstrap_basic_contact_form_fields, $contact_form_last_id, $bootstrap_basic_form_form;
+function lrl_contact_form_field( $atts, $content, $tag ) {
+	global $lrl_contact_form_fields, $contact_form_last_id, $lrl_form_form;
 	
 	$field = shortcode_atts( array(
 		'label' => null,
@@ -152,7 +152,7 @@ function bootstrap_basic_contact_form_field( $atts, $content, $tag ) {
 	
 	// special default for subject field
 	if ( $field['type'] == 'subject' && is_null($field['default']) )
-		$field['default'] = $bootstrap_basic_form_form->subject;
+		$field['default'] = $lrl_form_form->subject;
 	
 	// allow required=1 or required=true
 	if ( $field['required'] == '1' || strtolower($field['required']) == 'true' )
@@ -170,7 +170,7 @@ function bootstrap_basic_contact_form_field( $atts, $content, $tag ) {
 		$id = sanitize_title_with_dashes( $contact_form_last_id . '-' . $field['label'] );
 		$i = 0;
 		$max_tries = 12;
-		while ( isset( $bootstrap_basic_contact_form_fields[ $id ] ) ) {
+		while ( isset( $lrl_contact_form_fields[ $id ] ) ) {
 			$i++;
 			$id = sanitize_title_with_dashes( $contact_form_last_id . '-' . $field['label'] . '-' . $i );
 
@@ -181,18 +181,18 @@ function bootstrap_basic_contact_form_field( $atts, $content, $tag ) {
 		$field['id'] = $id;
 	}
 	
-	$bootstrap_basic_contact_form_fields[ $id ] = $field;
+	$lrl_contact_form_fields[ $id ] = $field;
 	
 	if ( isset( $_POST['contact-form-id'] ) && $_POST['contact-form-id'] == $contact_form_last_id )
-		bootstrap_basic_contact_form_validate_field( $field );
+		lrl_contact_form_validate_field( $field );
 	
-	return bootstrap_basic_contact_form_render_field( $field );
+	return lrl_contact_form_render_field( $field );
 }
 
-add_shortcode('contact-field', 'bootstrap_basic_contact_form_field');
+add_shortcode('contact-field', 'lrl_contact_form_field');
 
 
-function bootstrap_basic_contact_form_shortcode( $atts, $content ) {
+function lrl_contact_form_shortcode( $atts, $content ) {
 	global $post;
 
 	$default_to = get_option( 'admin_email' );
@@ -210,7 +210,7 @@ function bootstrap_basic_contact_form_shortcode( $atts, $content ) {
 		'to' => $default_to,
 		'subject' => $default_subject,
 		'show_subject' => 'no', // only used in back-compat mode
-		'widget' => 0 //This is not exposed to the user. Works with bootstrap_basic_contact_form_widget_atts
+		'widget' => 0 //This is not exposed to the user. Works with lrl_contact_form_widget_atts
 	), $atts ) );
 
 	$widget = esc_attr( $widget );
@@ -218,13 +218,13 @@ function bootstrap_basic_contact_form_shortcode( $atts, $content ) {
 	if ( ( function_exists( 'faux_faux' ) && faux_faux() ) || is_feed() )
 		return '[contact-form]';
 
-	global $wp_query, $bootstrap_basic_form_form, $contact_form_errors, $contact_form_values, $user_identity, $contact_form_last_id, $contact_form_message;
+	global $wp_query, $lrl_form_form, $contact_form_errors, $contact_form_values, $user_identity, $contact_form_last_id, $contact_form_message;
 	
 	// used to store attributes, configuration etc for access by contact-field shortcodes
-	$bootstrap_basic_form_form = new stdClass();
-	$bootstrap_basic_form_form->to = $to;
-	$bootstrap_basic_form_form->subject = $subject;
-	$bootstrap_basic_form_form->show_subject = $show_subject;
+	$lrl_form_form = new stdClass();
+	$lrl_form_form->to = $to;
+	$lrl_form_form->subject = $subject;
+	$lrl_form_form->show_subject = $show_subject;
 
 	if ( $widget )
 		$id = 'widget-' . $widget;
@@ -246,7 +246,7 @@ function bootstrap_basic_contact_form_shortcode( $atts, $content ) {
 	ob_end_clean();
 
 
-	$body = bootstrap_basic_contact_form_parse( $content );
+	$body = lrl_contact_form_parse( $content );
 
 	$r = "<div id='contact-form-$id'>\n";
 	
@@ -259,7 +259,7 @@ function bootstrap_basic_contact_form_shortcode( $atts, $content ) {
 		$r .= "</ul>\n</div>\n\n";
 	}
 		
-	$action = apply_filters( 'bootstrap_basic_form_contact_form_form_action', get_permalink( $post->ID ) . "#contact-form-$id", $post, $id );
+	$action = apply_filters( 'lrl_form_contact_form_form_action', get_permalink( $post->ID ) . "#contact-form-$id", $post, $id );
 	$r .= "<form action='" . esc_url( $action ) . "' method='post' class='contact-form commentsblock'>\n";
 	$r .= $body;
 	$r .= "\t<p class='contact-submit'>\n";
@@ -289,7 +289,7 @@ function bootstrap_basic_contact_form_shortcode( $atts, $content ) {
 
 	$to = ( $valid_emails ) ? $valid_emails : $default_to;
 
-	$message_sent = bootstrap_basic_contact_form_send_message( $to, $subject, $widget );
+	$message_sent = lrl_contact_form_send_message( $to, $subject, $widget );
 
 	if ( is_array( $contact_form_values ) )
 		extract( $contact_form_values );
@@ -312,7 +312,7 @@ function bootstrap_basic_contact_form_shortcode( $atts, $content ) {
 		$r_success_message = "<h3>" . __( 'Message Sent', 'bootstrap' ) . "</h3>\n\n";
 		$r_success_message .= wp_kses($contact_form_message, array('br' => array(), 'blockquote' => array()));
 
-		$r .= apply_filters( 'bootstrap_basic_form_contact_form_success_message', $r_success_message );
+		$r .= apply_filters( 'lrl_form_contact_form_success_message', $r_success_message );
 
 		$r .= "</div>";
 		
@@ -324,9 +324,9 @@ function bootstrap_basic_contact_form_shortcode( $atts, $content ) {
 
 	return $r;
 }
-add_shortcode( 'contact-form', 'bootstrap_basic_contact_form_shortcode' );
+add_shortcode( 'contact-form', 'lrl_contact_form_shortcode' );
 
-function bootstrap_basic_contact_form_send_message( $to, $subject, $widget ) {
+function lrl_contact_form_send_message( $to, $subject, $widget ) {
 	global $post;
 	
  	if ( !isset( $_POST['contact-form-id'] ) )
@@ -341,13 +341,13 @@ function bootstrap_basic_contact_form_send_message( $to, $subject, $widget ) {
 		check_admin_referer( 'contact-form_' . $post->ID );
 
 	global $contact_form_values, $contact_form_errors, $current_user, $user_identity;
-	global $bootstrap_basic_contact_form_fields, $contact_form_message;
+	global $lrl_contact_form_fields, $contact_form_message;
 	
 	// compact the fields and values into an array of Label => Value pairs
 	// also find values for comment_author_email and other significant fields
 	$all_values = $extra_values = array();
 	
-	foreach ( $bootstrap_basic_contact_form_fields as $id => $field ) {
+	foreach ( $lrl_contact_form_fields as $id => $field ) {
 		if ( $field['type'] == 'email' && !isset( $comment_author_email ) ) {
 			$comment_author_email = $contact_form_values[ $id ];
 			$comment_author_email_label = $field['label'];
@@ -416,7 +416,7 @@ function bootstrap_basic_contact_form_send_message( $to, $subject, $widget ) {
 	$contact_form_values = compact( $vars );
 
 	$spam = '';
-	$akismet_values = bootstrap_basic_contact_form_prepare_for_akismet( $contact_form_values );
+	$akismet_values = lrl_contact_form_prepare_for_akismet( $contact_form_values );
 	$is_spam = apply_filters( 'contact_form_is_spam', $akismet_values );
 	if ( is_wp_error( $is_spam ) )
 		return; // abort
@@ -525,9 +525,9 @@ function bootstrap_basic_contact_form_send_message( $to, $subject, $widget ) {
 	# Unfortunately wp_insert_post() tries very hard to make sure the post
 	# author gets the currently logged in user id.  That is how we ended up
 	# with this work around.
-	global $do_bootstrap_basic_form_insert;
-	$do_bootstrap_basic_form_insert = TRUE;
-	add_filter( 'wp_insert_post_data', 'bootstrap_basic_form_insert_filter', 10, 2 );
+	global $do_lrl_form_insert;
+	$do_lrl_form_insert = TRUE;
+	add_filter( 'wp_insert_post_data', 'lrl_form_insert_filter', 10, 2 );
 
 	$post_id = wp_insert_post( array(
 		'post_date'    => $feedback_mysql_time,
@@ -540,8 +540,8 @@ function bootstrap_basic_contact_form_send_message( $to, $subject, $widget ) {
 	) );
 
 	# once insert has finished we don't need this filter any more
-	remove_filter( 'wp_insert_post_data', 'bootstrap_basic_form_insert_filter' );
-	$do_bootstrap_basic_form_insert = FALSE;
+	remove_filter( 'wp_insert_post_data', 'lrl_form_insert_filter' );
+	$do_lrl_form_insert = FALSE;
 
 	update_post_meta( $post_id, '_feedback_author', wp_kses( $comment_author, array() ) );
 	update_post_meta( $post_id, '_feedback_author_email', wp_kses( $comment_author_email, array() ) );
@@ -554,23 +554,23 @@ function bootstrap_basic_contact_form_send_message( $to, $subject, $widget ) {
 	update_post_meta( $post_id, '_feedback_akismet_values', $akismet_values );
 	update_post_meta( $post_id, '_feedback_email', array( 'to' => $to, 'subject' => $subject, 'message' => $message, 'headers' => $headers ) );
 
-	do_action( 'bootstrap_basic_form_pre_message_sent', $post_id, $all_values, $extra_values );
+	do_action( 'lrl_form_pre_message_sent', $post_id, $all_values, $extra_values );
 
 	# schedule deletes of old spam feedback
-	if ( !wp_next_scheduled( 'bootstrap_basic_form_scheduled_delete' ) ) {
-		wp_schedule_event( time() + 250, 'daily', 'bootstrap_basic_form_scheduled_delete' );
+	if ( !wp_next_scheduled( 'lrl_form_scheduled_delete' ) ) {
+		wp_schedule_event( time() + 250, 'daily', 'lrl_form_scheduled_delete' );
 	}
 
 	if ( $is_spam !== TRUE )
 		return wp_mail( $to, "{$spam}{$subject}", $message, $headers );
-	elseif ( apply_filters( 'bootstrap_basic_form_still_email_spam', FALSE ) == TRUE )
+	elseif ( apply_filters( 'lrl_form_still_email_spam', FALSE ) == TRUE )
 		return wp_mail( $to, "{$spam}{$subject}", $message, $headers );
 
 }
 
 // populate an array with all values necessary to submit a NEW comment to Akismet
 // note that this includes the current user_ip etc, so this should only be called when accepting a new item via $_POST
-function bootstrap_basic_contact_form_prepare_for_akismet( $form ) {
+function lrl_contact_form_prepare_for_akismet( $form ) {
 
 	$form['comment_type'] = 'contact_form';
 	$form['user_ip']      = preg_replace( '/[^0-9., ]/', '', $_SERVER['REMOTE_ADDR'] );
@@ -587,8 +587,8 @@ function bootstrap_basic_contact_form_prepare_for_akismet( $form ) {
 	return $form;
 }
 
-// submit an array to Akismet. If you're accepting a new item via $_POST, run it through bootstrap_basic_contact_form_prepare_for_akismet() first
-function bootstrap_basic_contact_form_is_spam_akismet( $form ) {
+// submit an array to Akismet. If you're accepting a new item via $_POST, run it through lrl_contact_form_prepare_for_akismet() first
+function lrl_contact_form_is_spam_akismet( $form ) {
 	if ( !function_exists( 'akismet_http_post' ) )
 		return false;
 		
@@ -602,12 +602,12 @@ function bootstrap_basic_contact_form_is_spam_akismet( $form ) {
 	$result = false;
 	if ( 'true' == trim( $response[1] ) ) // 'true' is spam
 		$result = true;
-	return apply_filters( 'bootstrap_basic_contact_form_is_spam_akismet', $result, $form );
+	return apply_filters( 'lrl_contact_form_is_spam_akismet', $result, $form );
 }
 
 // submit a comment as either spam or ham
 // $as should be a string (either 'spam' or 'ham'), $form should be the comment array
-function bootstrap_basic_contact_form_akismet_submit( $as, $form ) {
+function lrl_contact_form_akismet_submit( $as, $form ) {
 	global $akismet_api_host, $akismet_api_port;
 	
 	if ( !in_array( $as, array( 'ham', 'spam' ) ) )
@@ -621,36 +621,36 @@ function bootstrap_basic_contact_form_akismet_submit( $as, $form ) {
 	return trim( $response[1] );
 }
 
-function bootstrap_basic_contact_form_widget_atts( $text ) {
+function lrl_contact_form_widget_atts( $text ) {
 	static $widget = 0;
 	
 	$widget++;
 
 	return preg_replace( '/\[contact-form([^a-zA-Z_-])/', '[contact-form widget="' . $widget . '"\\1', $text );
 }
-add_filter( 'widget_text', 'bootstrap_basic_contact_form_widget_atts', 0 );
+add_filter( 'widget_text', 'lrl_contact_form_widget_atts', 0 );
 
-function bootstrap_basic_contact_form_widget_shortcode_hack( $text ) {
+function lrl_contact_form_widget_shortcode_hack( $text ) {
 	if ( !preg_match( '/\[contact-form([^a-zA-Z_-])/', $text ) ) {
 		return $text;
 	}
 
 	$old = $GLOBALS['shortcode_tags'];
 	remove_all_shortcodes();
-	add_shortcode( 'contact-form', 'bootstrap_basic_contact_form_shortcode' );
-	add_shortcode( 'contact-field', 'bootstrap_basic_contact_form_field' );
+	add_shortcode( 'contact-form', 'lrl_contact_form_shortcode' );
+	add_shortcode( 'contact-field', 'lrl_contact_form_field' );
 	$text = do_shortcode( $text );
 	$GLOBALS['shortcode_tags'] = $old;
 	return $text;
 }
 
-function bootstrap_basic_contact_form_init() {
+function lrl_contact_form_init() {
 	if ( function_exists( 'akismet_http_post' ) ) {
-		add_filter( 'contact_form_is_spam', 'bootstrap_basic_contact_form_is_spam_akismet', 10 );
-		add_action( 'contact_form_akismet', 'bootstrap_basic_contact_form_akismet_submit', 10, 2 );
+		add_filter( 'contact_form_is_spam', 'lrl_contact_form_is_spam_akismet', 10 );
+		add_action( 'contact_form_akismet', 'lrl_contact_form_akismet_submit', 10, 2 );
 	}
 	if ( !has_filter( 'widget_text', 'do_shortcode' ) )
-		add_filter( 'widget_text', 'bootstrap_basic_contact_form_widget_shortcode_hack', 5 );
+		add_filter( 'widget_text', 'lrl_contact_form_widget_shortcode_hack', 5 );
 
 	// custom post type we'll use to keep copies of the feedback items
 	register_post_type( 'feedback', array(
@@ -679,43 +679,43 @@ function bootstrap_basic_contact_form_init() {
 		'_builtin'               => FALSE
 	) );
 }
-add_action( 'init', 'bootstrap_basic_contact_form_init' );
+add_action( 'init', 'lrl_contact_form_init' );
 
 /**
  * Add a contact form button to the post composition screen
  */
-add_action( 'media_buttons', 'bootstrap_basic_form_media_button', 999 );
-function bootstrap_basic_form_media_button( ) {
+add_action( 'media_buttons', 'lrl_form_media_button', 999 );
+function lrl_form_media_button( ) {
 	global $post_ID, $temp_ID;
 	$iframe_post_id = (int) (0 == $post_ID ? $temp_ID : $post_ID);
 	$title = esc_attr( __( 'bootstrap Form Builder', 'bootstrap' ) );
 	$plugin_url = esc_url( BOOTSTRAP_FORMS_DIR );
-	$site_url = admin_url( "/admin-ajax.php?post_id=$iframe_post_id&amp;bootstrap_basic_form=form-builder&amp;action=bootstrap_basic_form_form_builder&amp;TB_iframe=true&amp;width=768" );
+	$site_url = admin_url( "/admin-ajax.php?post_id=$iframe_post_id&amp;lrl_form=form-builder&amp;action=lrl_form_form_builder&amp;TB_iframe=true&amp;width=768" );
 
 	echo '<a href="' . $site_url . '&id=add_form" class="thickbox" title="' . $title . '"><img src="' . $plugin_url . '/images/form.png" alt="' . $title . '" width="15" height="15" /></a>';
 }
 
 
-if ( !empty( $_GET['bootstrap_basic_form'] ) && $_GET['bootstrap_basic_form'] == 'form-builder' ) {
-	add_action( 'parse_request', 'bootstrap_basic_parse_wp_request' );
-	add_action( 'wp_ajax_bootstrap_basic_form_form_builder', 'bootstrap_basic_parse_wp_request' );
+if ( !empty( $_GET['lrl_form'] ) && $_GET['lrl_form'] == 'form-builder' ) {
+	add_action( 'parse_request', 'lrl_parse_wp_request' );
+	add_action( 'wp_ajax_lrl_form_form_builder', 'lrl_parse_wp_request' );
 }
 
-function bootstrap_basic_parse_wp_request( $wp ) {
-	bootstrap_basic_display_form_view( );
+function lrl_parse_wp_request( $wp ) {
+	lrl_display_form_view( );
 	exit;
 }
 
-function bootstrap_basic_display_form_view( ) {
+function lrl_display_form_view( ) {
 	require_once BOOTSTRAP_FORMS_DIR . '/form-view.php';
 }
 
 
 
-function bootstrap_basic_form_insert_filter( $data, $postarr ) {
-	global $do_bootstrap_basic_form_insert;
+function lrl_form_insert_filter( $data, $postarr ) {
+	global $do_lrl_form_insert;
 
-	if ( $do_bootstrap_basic_form_insert === TRUE ) {
+	if ( $do_lrl_form_insert === TRUE ) {
 		if ( $data['post_type'] == 'feedback' ) {
 			if ( $postarr['post_type'] == 'feedback' ) {
 				$data['post_author'] = 0;
@@ -726,11 +726,11 @@ function bootstrap_basic_form_insert_filter( $data, $postarr ) {
 	return $data;
 }
 
-add_action( 'bootstrap_basic_form_scheduled_delete', 'bootstrap_basic_form_delete_old_spam' );
-function bootstrap_basic_form_delete_old_spam() {
+add_action( 'lrl_form_scheduled_delete', 'lrl_form_delete_old_spam' );
+function lrl_form_delete_old_spam() {
 	global $wpdb;
 
-	$bootstrap_basic_form_delete_limit = 100;
+	$lrl_form_delete_limit = 100;
 
 	$now_gmt = current_time( 'mysql', 1 );
 	$sql = $wpdb->prepare( "
@@ -740,7 +740,7 @@ function bootstrap_basic_form_delete_old_spam() {
 			AND `post_type` = 'feedback'
 			AND `post_status` = 'spam'
 		LIMIT %d
-	", $now_gmt, $bootstrap_basic_form_delete_limit );
+	", $now_gmt, $lrl_form_delete_limit );
 	$post_ids = $wpdb->get_col( $sql );
 
 	foreach ( (array) $post_ids as $post_id ) {
@@ -752,13 +752,13 @@ function bootstrap_basic_form_delete_old_spam() {
 	# nothing special about 5000 or 11
 	# just trying to periodically recover deleted rows
 	$random_num = mt_rand( 1, 5000 );
-	if ( apply_filters( 'bootstrap_basic_form_optimize_table', ( $random_number == 11 ) ) ) {
+	if ( apply_filters( 'lrl_form_optimize_table', ( $random_number == 11 ) ) ) {
 		$wpdb->query( "OPTIMIZE TABLE $wpdb->posts" );
 	}
 
 	# if we hit the max then schedule another run
-	if ( count( $post_ids ) >= $bootstrap_basic_form_delete_limit ) {
-		wp_schedule_single_event( time() + 700, 'bootstrap_basic_form_scheduled_delete' );
+	if ( count( $post_ids ) >= $lrl_form_delete_limit ) {
+		wp_schedule_single_event( time() + 700, 'lrl_form_scheduled_delete' );
 	}
 }
 

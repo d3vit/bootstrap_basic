@@ -1,12 +1,12 @@
 <?php
-class bootstrap_basic_Options_select_hide_below extends bootstrap_basic_Options{	
+class lrl_Options_select_hide_below extends lrl_Options{	
 	
 	/**
 	 * Field Constructor.
 	 *
 	 * Required - must call the parent constructor, then assign field and value to vars, and obviously call the render field function
 	 *
-	 * @since bootstrap_basic_Options 1.0.1
+	 * @since lrl_Options 1.0.1
 	*/
 	function __construct($field = array(), $value ='', $parent){
 		
@@ -24,13 +24,13 @@ class bootstrap_basic_Options_select_hide_below extends bootstrap_basic_Options{
 	 *
 	 * Takes the vars and outputs the HTML for the field in the settings
 	 *
-	 * @since bootstrap_basic_Options 1.0.1
+	 * @since lrl_Options 1.0.1
 	*/
 	function render(){
 		
 		$class = (isset($this->field['class']))?$this->field['class']:'';
 		
-		echo '<select id="'.$this->field['id'].'" name="'.$this->args['opt_name'].'['.$this->field['id'].']" class="'.$class.' bootstrap_basic-opts-select-hide-below" >';
+		echo '<select id="'.$this->field['id'].'" name="'.$this->args['opt_name'].'['.$this->field['id'].']" class="'.$class.' lrl-opts-select-hide-below" >';
 			
 			foreach($this->field['options'] as $k => $v){
 				
@@ -50,13 +50,13 @@ class bootstrap_basic_Options_select_hide_below extends bootstrap_basic_Options{
 	 *
 	 * If this field requires any scripts, or css define this function and register/enqueue the scripts/css
 	 *
-	 * @since bootstrap_basic_Options 1.0.1
+	 * @since lrl_Options 1.0.1
 	*/
 	function enqueue(){
 		
 		wp_enqueue_script(
-			'bootstrap_basic-opts-select-hide-below-js', 
-			bootstrap_basic_OPTIONS_URL.'fields/select_hide_below/field_select_hide_below.js', 
+			'lrl-opts-select-hide-below-js', 
+			lrl_OPTIONS_URL.'fields/select_hide_below/field_select_hide_below.js', 
 			array('jquery'),
 			time(),
 			true

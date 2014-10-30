@@ -1,35 +1,35 @@
 <?php
-global $bootstrap_basic_options;
+global $lrl_options;
 
-$bootstrap_basic_options = array();
+$lrl_options = array();
 
 function register_theme_options( $options ){
-    global $bootstrap_basic_options;
-    $bootstrap_basic_options = array_merge( $bootstrap_basic_options, $options );
+    global $lrl_options;
+    $lrl_options = array_merge( $lrl_options, $options );
 }
 
 
-if ( ! class_exists('bootstrap_basic_Options') ){
+if ( ! class_exists('lrl_Options') ){
 	
 	// windows-proof constants: replace backward by forward slashes - thanks to: https://github.com/peterbouwmeester
 	$fslashed_dir = trailingslashit(str_replace('\\','/',dirname(__FILE__)));
 	$fslashed_abs = trailingslashit(str_replace('\\','/',ABSPATH));
 	
-	if(!defined('bootstrap_basic_OPTIONS_DIR')){
-		define('bootstrap_basic_OPTIONS_DIR', $fslashed_dir);
+	if(!defined('lrl_OPTIONS_DIR')){
+		define('lrl_OPTIONS_DIR', $fslashed_dir);
 	}
 	
-	if(!defined('bootstrap_basic_OPTIONS_URL')){
-		define('bootstrap_basic_OPTIONS_URL', site_url(str_replace( $fslashed_abs, '', $fslashed_dir )));
+	if(!defined('lrl_OPTIONS_URL')){
+		define('lrl_OPTIONS_URL', site_url(str_replace( $fslashed_abs, '', $fslashed_dir )));
 	}
 	
-class bootstrap_basic_Options{
+class lrl_Options{
 	
-	protected $framework_url = 'http://bootstrap_basicthemes.com/framework/';
+	protected $framework_url = 'http://lrlthemes.com/framework/';
 	protected $framework_version = '2.0';
 		
-	public $dir = bootstrap_basic_OPTIONS_DIR;
-	public $url = bootstrap_basic_OPTIONS_URL;
+	public $dir = lrl_OPTIONS_DIR;
+	public $url = lrl_OPTIONS_URL;
 	public $page = '';
 	public $args = array();
 	public $sections = array();
@@ -42,7 +42,7 @@ class bootstrap_basic_Options{
 	/**
 	 * Class Constructor. Defines the args for the theme options class
 	 *
-	 * @since bootstrap_basic_Options 2.0
+	 * @since lrl_Options 2.0
 	 *
 	 * @param $array $args Arguments. Class constructor arguments.
 	*/
@@ -54,7 +54,7 @@ class bootstrap_basic_Options{
 		
 		$defaults['google_api_key'] = '';//must be defined for use with google webfonts field type
 		
-		$defaults['menu_icon'] = bootstrap_basic_OPTIONS_URL.'/assets/assets/images/menu_icon.png';
+		$defaults['menu_icon'] = lrl_OPTIONS_URL.'/assets/assets/images/menu_icon.png';
 		$defaults['menu_title'] = __('Options', 'bootstrap');
 		$defaults['page_icon'] = 'icon-themes';
 		$defaults['page_title'] = __('Options', 'bootstrap');
@@ -84,13 +84,13 @@ class bootstrap_basic_Options{
 		
 		//get args
 		$this->args = wp_parse_args($args, $defaults);
-		$this->args = apply_filters('bootstrap_basic-opts-args-'.$this->args['opt_name'], $this->args);
+		$this->args = apply_filters('lrl-opts-args-'.$this->args['opt_name'], $this->args);
 		
 		//get sections
-		$this->sections = apply_filters('bootstrap_basic-opts-sections-'.$this->args['opt_name'], $sections);
+		$this->sections = apply_filters('lrl-opts-sections-'.$this->args['opt_name'], $sections);
 		
 		//get extra tabs
-		$this->extra_tabs = apply_filters('bootstrap_basic-opts-extra-tabs-'.$this->args['opt_name'], $extra_tabs);
+		$this->extra_tabs = apply_filters('lrl-opts-extra-tabs-'.$this->args['opt_name'], $extra_tabs);
 		
 		//set option with defaults
 		add_action('init', array(&$this, '_set_default_options'));
@@ -102,13 +102,13 @@ class bootstrap_basic_Options{
 		add_action('admin_init', array(&$this, '_register_setting'));
 		
 		//add the js for the error handling before the form
-		add_action('bootstrap_basic-opts-page-before-form-'.$this->args['opt_name'], array(&$this, '_errors_js'), 1);
+		add_action('lrl-opts-page-before-form-'.$this->args['opt_name'], array(&$this, '_errors_js'), 1);
 		
 		//add the js for the warning handling before the form
-		add_action('bootstrap_basic-opts-page-before-form-'.$this->args['opt_name'], array(&$this, '_warnings_js'), 2);
+		add_action('lrl-opts-page-before-form-'.$this->args['opt_name'], array(&$this, '_warnings_js'), 2);
 		
 		//hook into the wp feeds for downloading the exported settings
-		add_action('do_feed_bootstrap_basicopts-'.$this->args['opt_name'], array(&$this, '_download_options'), 1, 1);
+		add_action('do_feed_lrlopts-'.$this->args['opt_name'], array(&$this, '_download_options'), 1, 1);
 		
 		//get the options for use later on
 		$this->options = get_option($this->args['opt_name']);
@@ -119,7 +119,7 @@ class bootstrap_basic_Options{
 	/**
 	 * ->get(); This is used to return and option value from the options array
 	 *
-	 * @since bootstrap_basic_Options 2.0.1
+	 * @since lrl_Options 2.0.1
 	 *
 	 * @param $array $args Arguments. Class constructor arguments.
 	*/
@@ -130,7 +130,7 @@ class bootstrap_basic_Options{
 	/**
 	 * ->set(); This is used to set an arbitrary option in the options array
 	 *
-	 * @since bootstrap_basic_Options 2.0.1
+	 * @since lrl_Options 2.0.1
 	 * 
 	 * @param string $opt_name the name of the option being added
 	 * @param mixed $value the value of the option being added
@@ -145,7 +145,7 @@ class bootstrap_basic_Options{
 	/**
 	 * ->show(); This is used to echo and option value from the options array
 	 *
-	 * @since bootstrap_basic_Options 2.0.1
+	 * @since lrl_Options 2.0.1
 	 *
 	 * @param $array $args Arguments. Class constructor arguments.
 	*/
@@ -162,7 +162,7 @@ class bootstrap_basic_Options{
 	/**
 	 * Get default options into an array suitable for the settings API
 	 *
-	 * @since bootstrap_basic_Options 2.0
+	 * @since lrl_Options 2.0
 	 *
 	*/
 	function _default_values(){
@@ -196,7 +196,7 @@ class bootstrap_basic_Options{
 	/**
 	 * Set default options on admin_init if option doesn't exist (theme activation hook caused problems, so admin_init it is)
 	 *
-	 * @since bootstrap_basic_Options 2.0
+	 * @since lrl_Options 2.0
 	 *
 	*/
 	function _set_default_options(){
@@ -210,7 +210,7 @@ class bootstrap_basic_Options{
 	/**
 	 * Class Theme Options Page Function, creates main options page.
 	 *
-	 * @since bootstrap_basic_Options 2.0
+	 * @since lrl_Options 2.0
 	*/
 	function _options_page(){
 		if($this->args['page_type'] == 'submenu'){
@@ -308,12 +308,12 @@ class bootstrap_basic_Options{
 	/**
 	 * enqueue styles/js for theme page
 	 *
-	 * @since bootstrap_basic_Options 2.0
+	 * @since lrl_Options 2.0
 	*/
 	function _enqueue(){
 		
 		wp_register_style(
-				'bootstrap_basic-opts-css', 
+				'lrl-opts-css', 
 				$this->url.'assets/css/options.css',
 				array('farbtastic'),
 				time(),
@@ -321,8 +321,8 @@ class bootstrap_basic_Options{
 			);
 			
 		wp_register_style(
-			'bootstrap_basic-opts-jquery-ui-css',
-			apply_filters('bootstrap_basic-opts-ui-theme', $this->url.'assets/css/jquery-ui-aristo/aristo.css'),
+			'lrl-opts-jquery-ui-css',
+			apply_filters('lrl-opts-ui-theme', $this->url.'assets/css/jquery-ui-aristo/aristo.css'),
 			'',
 			time(),
 			'all'
@@ -330,19 +330,19 @@ class bootstrap_basic_Options{
 			
 			
 		if(false === $this->args['stylesheet_override']){
-			wp_enqueue_style('bootstrap_basic-opts-css');
+			wp_enqueue_style('lrl-opts-css');
 		}
 		
 		wp_enqueue_script(
-			'bootstrap_basic-opts-js', 
+			'lrl-opts-js', 
 			$this->url.'assets/js/options.js', 
 			array('jquery'),
 			time(),
 			true
 		);
-		wp_localize_script('bootstrap_basic-opts-js', 'bootstrap_basic_opts', array('reset_confirm' => __('Are you sure? Resetting will loose all custom values.', 'bootstrap'), 'opt_name' => $this->args['opt_name']));
+		wp_localize_script('lrl-opts-js', 'lrl_opts', array('reset_confirm' => __('Are you sure? Resetting will loose all custom values.', 'bootstrap'), 'opt_name' => $this->args['opt_name']));
 		
-		do_action('bootstrap_basic-opts-enqueue-'.$this->args['opt_name']);
+		do_action('lrl-opts-enqueue-'.$this->args['opt_name']);
 		
 		
 		foreach($this->sections as $k => $section){
@@ -353,7 +353,7 @@ class bootstrap_basic_Options{
 					
 					if(isset($field['type'])){
 					
-						$field_class = 'bootstrap_basic_Options_'.$field['type'];
+						$field_class = 'lrl_Options_'.$field['type'];
 						
 						if(!class_exists($field_class)){
 							require_once($this->dir.'fields/'.$field['type'].'/field_'.$field['type'].'.php');
@@ -378,21 +378,21 @@ class bootstrap_basic_Options{
 	/**
 	 * Download the options file, or display it
 	 *
-	 * @since bootstrap_basic_Options 2.0.1
+	 * @since lrl_Options 2.0.1
 	*/
 	function _download_options(){
 		//-'.$this->args['opt_name']
 		if(!isset($_GET['secret']) || $_GET['secret'] != md5(AUTH_KEY.SECURE_AUTH_KEY)){wp_die('Invalid Secret for options use');exit;}
 		if(!isset($_GET['feed'])){wp_die('No Feed Defined');exit;}
-		$backup_options = get_option(str_replace('bootstrap_basicopts-','',$_GET['feed']));
-		$backup_options['bootstrap_basic-opts-backup'] = '1';
+		$backup_options = get_option(str_replace('lrlopts-','',$_GET['feed']));
+		$backup_options['lrl-opts-backup'] = '1';
 		$content = '###'.serialize($backup_options).'###';
 		
 		
 		if(isset($_GET['action']) && $_GET['action'] == 'download_options'){
 			header('Content-Description: File Transfer');
 			header('Content-type: application/txt');
-			header('Content-Disposition: attachment; filename="'.str_replace('bootstrap_basicopts-','',$_GET['feed']).'_options_'.date('d-m-Y').'.txt"');
+			header('Content-Disposition: attachment; filename="'.str_replace('lrlopts-','',$_GET['feed']).'_options_'.date('d-m-Y').'.txt"');
 			header('Content-Transfer-Encoding: binary');
 			header('Expires: 0');
 			header('Cache-Control: must-revalidate');
@@ -409,7 +409,7 @@ class bootstrap_basic_Options{
 	/**
 	 * show page help
 	 *
-	 * @since bootstrap_basic_Options 2.0
+	 * @since lrl_Options 2.0
 	*/
 	function _load_page(){
 		
@@ -431,19 +431,19 @@ class bootstrap_basic_Options{
 			$screen->set_help_sidebar($this->args['help_sidebar']);
 		}//if
 		
-		do_action('bootstrap_basic-opts-load-page-'.$this->args['opt_name'], $screen);
+		do_action('lrl-opts-load-page-'.$this->args['opt_name'], $screen);
 		
 	}//function
 	
 	
 	/**
-	 * do action bootstrap_basic-opts-admin-head for theme options page
+	 * do action lrl-opts-admin-head for theme options page
 	 *
-	 * @since bootstrap_basic_Options 2.0
+	 * @since lrl_Options 2.0
 	*/
 	function admin_head(){
 		
-		do_action('bootstrap_basic-opts-admin-head-'.$this->args['opt_name'], $this);
+		do_action('lrl-opts-admin-head-'.$this->args['opt_name'], $this);
 		
 	}//function
 	
@@ -458,7 +458,7 @@ class bootstrap_basic_Options{
 	/**
 	 * Register Option for use
 	 *
-	 * @since bootstrap_basic_Options 2.0
+	 * @since lrl_Options 2.0
 	*/
 	function _register_setting(){
 		
@@ -487,7 +487,7 @@ class bootstrap_basic_Options{
 			
 		}//foreach
 		
-		do_action('bootstrap_basic-opts-register-settings-'.$this->args['opt_name']);
+		do_action('lrl-opts-register-settings-'.$this->args['opt_name']);
 		
 	}//function
  
@@ -495,11 +495,11 @@ class bootstrap_basic_Options{
 	/**
 	 * Validate the Options options before insertion
 	 *
-	 * @since bootstrap_basic_Options 2.0
+	 * @since lrl_Options 2.0
 	*/
 	function _validate_options($plugin_options){
 		
-		set_transient('bootstrap_basic-opts-saved', '1', 1000 );
+		set_transient('lrl-opts-saved', '1', 1000 );
 		
 		if(!empty($plugin_options['import'])){
 			
@@ -510,7 +510,7 @@ class bootstrap_basic_Options{
 			}
 			
 			$imported_options = unserialize(trim($import,'###'));
-			if(is_array($imported_options) && isset($imported_options['bootstrap_basic-opts-backup']) && $imported_options['bootstrap_basic-opts-backup'] == '1'){
+			if(is_array($imported_options) && isset($imported_options['lrl-opts-backup']) && $imported_options['lrl-opts-backup'] == '1'){
 				$imported_options['imported'] = 1;
 				return $imported_options;
 			}
@@ -529,14 +529,14 @@ class bootstrap_basic_Options{
 		$plugin_options = $this->_validate_values($plugin_options, $this->options);
 		
 		if($this->errors){
-			set_transient('bootstrap_basic-opts-errors-'.$this->args['opt_name'], $this->errors, 1000 );		
+			set_transient('lrl-opts-errors-'.$this->args['opt_name'], $this->errors, 1000 );		
 		}//if errors
 		
 		if($this->warnings){
-			set_transient('bootstrap_basic-opts-warnings-'.$this->args['opt_name'], $this->warnings, 1000 );		
+			set_transient('lrl-opts-warnings-'.$this->args['opt_name'], $this->warnings, 1000 );		
 		}//if errors
 		
-		do_action('bootstrap_basic-opts-options-validate-'.$this->args['opt_name'], $plugin_options, $this->options);
+		do_action('lrl-opts-options-validate-'.$this->args['opt_name'], $plugin_options, $this->options);
 		
 		
 		unset($plugin_options['defaults']);
@@ -553,7 +553,7 @@ class bootstrap_basic_Options{
 	 * Validate values from options form (used in settings api validate function)
 	 * calls the custom validation class for the field so authors can override with custom classes
 	 *
-	 * @since bootstrap_basic_Options 2.0
+	 * @since lrl_Options 2.0
 	*/
 	function _validate_values($plugin_options, $options){
 		foreach($this->sections as $k => $section){
@@ -580,7 +580,7 @@ class bootstrap_basic_Options{
 					}//if
 	
 					if(isset($field['validate'])){
-						$validate = 'bootstrap_basic_Validation_'.$field['validate'];
+						$validate = 'lrl_Validation_'.$field['validate'];
 						
 						if(!class_exists($validate)){
 							require_once($this->dir.'validation/'.$field['validate'].'/validation_'.$field['validate'].'.php');
@@ -626,40 +626,40 @@ class bootstrap_basic_Options{
 	/**
 	 * HTML OUTPUT.
 	 *
-	 * @since bootstrap_basic_Options 2.0
+	 * @since lrl_Options 2.0
 	*/
 	function _options_page_html(){
 		
 		echo '<div class="wrap">';
 			echo '<div id="'.$this->args['page_icon'].'" class="icon32"><br/></div>';
-			echo '<h2 id="bootstrap_basic-opts-heading">'.get_admin_page_title().'</h2>';
+			echo '<h2 id="lrl-opts-heading">'.get_admin_page_title().'</h2>';
 			echo (isset($this->args['intro_text']))?$this->args['intro_text']:'';
 			
-			do_action('bootstrap_basic-opts-page-before-form-'.$this->args['opt_name']);
+			do_action('lrl-opts-page-before-form-'.$this->args['opt_name']);
 
-			echo '<form method="post" action="options.php" enctype="multipart/form-data" id="bootstrap_basic-opts-form-wrapper">';
+			echo '<form method="post" action="options.php" enctype="multipart/form-data" id="lrl-opts-form-wrapper">';
 				settings_fields($this->args['opt_name'].'_group');
 				
-				$this->options['last_tab'] = (isset($_GET['tab']) && !get_transient('bootstrap_basic-opts-saved'))?$_GET['tab']:$this->options['last_tab'];
+				$this->options['last_tab'] = (isset($_GET['tab']) && !get_transient('lrl-opts-saved'))?$_GET['tab']:$this->options['last_tab'];
 				
 				echo '<input type="hidden" id="last_tab" name="'.$this->args['opt_name'].'[last_tab]" value="'.$this->options['last_tab'].'" />';
 				
-				echo '<div id="bootstrap_basic-opts-header">';
-				echo '<h3 id="bootstrap_basic-opts-theme-heading"><span id="opts-theme-heading">'.THEME_NAME.' WordPress Theme</span>';
-				echo '<span id="bootstrap_basic-opts-theme-ver">Version '.THEME_VER.'</span></h3>';
+				echo '<div id="lrl-opts-header">';
+				echo '<h3 id="lrl-opts-theme-heading"><span id="opts-theme-heading">'.THEME_NAME.' WordPress Theme</span>';
+				echo '<span id="lrl-opts-theme-ver">Version '.THEME_VER.'</span></h3>';
 						
-					if(isset($_GET['settings-updated']) && $_GET['settings-updated'] == 'true' && get_transient('bootstrap_basic-opts-saved') == '1'){
+					if(isset($_GET['settings-updated']) && $_GET['settings-updated'] == 'true' && get_transient('lrl-opts-saved') == '1'){
 						if(isset($this->options['imported']) && $this->options['imported'] == 1){
-							echo '<div id="bootstrap_basic-opts-imported">'.apply_filters('bootstrap_basic-opts-imported-text-'.$this->args['opt_name'], __('<strong>Settings Imported!</strong>', 'bootstrap')).'</div>';
+							echo '<div id="lrl-opts-imported">'.apply_filters('lrl-opts-imported-text-'.$this->args['opt_name'], __('<strong>Settings Imported!</strong>', 'bootstrap')).'</div>';
 						}else{
-							echo '<div id="bootstrap_basic-opts-save">'.apply_filters('bootstrap_basic-opts-saved-text-'.$this->args['opt_name'], __('<strong>Settings Saved!</strong>', 'bootstrap')).'</div>';
+							echo '<div id="lrl-opts-save">'.apply_filters('lrl-opts-saved-text-'.$this->args['opt_name'], __('<strong>Settings Saved!</strong>', 'bootstrap')).'</div>';
 						}
-						delete_transient('bootstrap_basic-opts-saved');
+						delete_transient('lrl-opts-saved');
 					}
-					echo '<div id="bootstrap_basic-opts-save-warn">'.apply_filters('bootstrap_basic-opts-changed-text-'.$this->args['opt_name'], __('', 'bootstrap')).'</div>';
-					echo '<div id="bootstrap_basic-opts-field-errors">'.__('<strong><span></span> error(s) were found!</strong>', 'bootstrap').'</div>';
+					echo '<div id="lrl-opts-save-warn">'.apply_filters('lrl-opts-changed-text-'.$this->args['opt_name'], __('', 'bootstrap')).'</div>';
+					echo '<div id="lrl-opts-field-errors">'.__('<strong><span></span> error(s) were found!</strong>', 'bootstrap').'</div>';
 					
-					echo '<div id="bootstrap_basic-opts-field-warnings">'.__('<strong><span></span> warning(s) were found!</strong>', 'bootstrap').'</div>';
+					echo '<div id="lrl-opts-field-warnings">'.__('<strong><span></span> warning(s) were found!</strong>', 'bootstrap').'</div>';
 									
 					submit_button('Save Changes', 'button-primary', 'button-primary', '', false);
 
@@ -668,83 +668,83 @@ class bootstrap_basic_Options{
 				echo '</div>';
 				echo '<div class="clear"></div><!--clearfix-->';
 				
-				echo '<div id="bootstrap_basic-opts-sidebar">';
-					echo '<ul id="bootstrap_basic-opts-group-menu">';
+				echo '<div id="lrl-opts-sidebar">';
+					echo '<ul id="lrl-opts-group-menu">';
 						
 						$icon = null;
 					
 						foreach($this->sections as $k => $section){
-								echo '<li id="'.$k.'_section_group_li" class="bootstrap_basic-opts-group-tab-link-li">';
-								echo '<a href="javascript:void(0);" id="'.$k.'_section_group_li_a" class="bootstrap_basic-opts-group-tab-link-a" data-rel="'.$k.'">'.$icon.'<span>'.$section['title'].'</span></a>';
+								echo '<li id="'.$k.'_section_group_li" class="lrl-opts-group-tab-link-li">';
+								echo '<a href="javascript:void(0);" id="'.$k.'_section_group_li_a" class="lrl-opts-group-tab-link-a" data-rel="'.$k.'">'.$icon.'<span>'.$section['title'].'</span></a>';
 							echo '</li>';
 						}
 						
-						do_action('bootstrap_basic-opts-after-section-menu-items-'.$this->args['opt_name'], $this);
+						do_action('lrl-opts-after-section-menu-items-'.$this->args['opt_name'], $this);
 						
 						if(true === $this->args['show_import_export']){
-							echo '<li id="import_export_default_section_group_li" class="bootstrap_basic-opts-group-tab-link-li">';
-									echo '<a href="javascript:void(0);" id="import_export_default_section_group_li_a" class="bootstrap_basic-opts-group-tab-link-a" data-rel="import_export_default"> <span>'.__('Import / Export & Reset', 'bootstrap').'</span></a>';
+							echo '<li id="import_export_default_section_group_li" class="lrl-opts-group-tab-link-li">';
+									echo '<a href="javascript:void(0);" id="import_export_default_section_group_li_a" class="lrl-opts-group-tab-link-a" data-rel="import_export_default"> <span>'.__('Import / Export & Reset', 'bootstrap').'</span></a>';
 							echo '</li>';
 						}
 						
 						
 						foreach($this->extra_tabs as $k => $tab){
 							$icon = (!isset($tab['icon']))?' ':'';
-							echo '<li id="'.$k.'_section_group_li" class="bootstrap_basic-opts-group-tab-link-li">';
-								echo '<a href="javascript:void(0);" id="'.$k.'_section_group_li_a" class="bootstrap_basic-opts-group-tab-link-a custom-tab" data-rel="'.$k.'">'.$icon.'<span>'.$tab['title'].'</span></a>';
+							echo '<li id="'.$k.'_section_group_li" class="lrl-opts-group-tab-link-li">';
+								echo '<a href="javascript:void(0);" id="'.$k.'_section_group_li_a" class="lrl-opts-group-tab-link-a custom-tab" data-rel="'.$k.'">'.$icon.'<span>'.$tab['title'].'</span></a>';
 							echo '</li>';
 						}
 
 //						
 //						if(false === $this->args['dev_mode']){
-//							echo '<li id="dev_mode_default_section_group_li" class="bootstrap_basic-opts-group-tab-link-li">';
-//									echo '<a href="javascript:void(0);" id="dev_mode_default_section_group_li_a" class="bootstrap_basic-opts-group-tab-link-a custom-tab" data-rel="dev_mode_default"> <span>'.__('Dev Mode Info', 'bootstrap').'</span></a>';
+//							echo '<li id="dev_mode_default_section_group_li" class="lrl-opts-group-tab-link-li">';
+//									echo '<a href="javascript:void(0);" id="dev_mode_default_section_group_li_a" class="lrl-opts-group-tab-link-a custom-tab" data-rel="dev_mode_default"> <span>'.__('Dev Mode Info', 'bootstrap').'</span></a>';
 //							echo '</li>';
 //						}
 //						
 					echo '</ul>';
 				echo '</div>';
 				
-				echo '<div id="bootstrap_basic-opts-main">';
+				echo '<div id="lrl-opts-main">';
 				
 					foreach($this->sections as $k => $section){
-						echo '<div id="'.$k.'_section_group'.'" class="bootstrap_basic-opts-group-tab">';
+						echo '<div id="'.$k.'_section_group'.'" class="lrl-opts-group-tab">';
 							do_settings_sections($k.'_section_group');
 						echo '</div>';
 					}					
 					
 					
 					if(true === $this->args['show_import_export']){
-						echo '<div id="import_export_default_section_group'.'" class="bootstrap_basic-opts-group-tab">';
+						echo '<div id="import_export_default_section_group'.'" class="lrl-opts-group-tab">';
 							
 							
 							echo '<div class="import-header">';
 								echo '<h3>'.__('Import / Export & Reset Options', 'bootstrap').'</h3>';
-								echo '<div class="bootstrap_basic-opts-section-desc">';
+								echo '<div class="lrl-opts-section-desc">';
 								echo '<p class="description">'.__('Copy & download your current options settings, import a new set, or do a full reset.', 'bootstrap').'</p>';
 								echo '</div>';
 							echo '</div>';
       
       
 							echo '<h4>'.__('Import Theme Options', 'bootstrap').'</h4>';
-							echo '<div class="bootstrap_basic-opts-section-desc">';
-								echo '<p class="description1">'.apply_filters('bootstrap_basic-opts-backup-description', __('Input your backup file below and hit Import to restore your sites options from a backup. Input the URL to another sites options set and hit Import to load the options from that site.', 'bootstrap')).'</p>';
+							echo '<div class="lrl-opts-section-desc">';
+								echo '<p class="description1">'.apply_filters('lrl-opts-backup-description', __('Input your backup file below and hit Import to restore your sites options from a backup. Input the URL to another sites options set and hit Import to load the options from that site.', 'bootstrap')).'</p>';
 							echo '</div>';
 
-							echo '<div class="bootstrap_basic-opts-import-warning"><span>'.apply_filters('bootstrap_basic-opts-import-warning', __('WARNING! This will overwrite any existing options, please proceed with extreme caution.', 'bootstrap')).'</span></div>';				
+							echo '<div class="lrl-opts-import-warning"><span>'.apply_filters('lrl-opts-import-warning', __('WARNING! This will overwrite any existing options, please proceed with extreme caution.', 'bootstrap')).'</span></div>';				
 							
-							echo '<p><a href="javascript:void(0);" id="bootstrap_basic-opts-import-code-button" class="button-secondary">Open Uploader</a> <a href="javascript:void(0);" id="bootstrap_basic-opts-import-link-button" class="button-secondary">URL Import</a></p>';
+							echo '<p><a href="javascript:void(0);" id="lrl-opts-import-code-button" class="button-secondary">Open Uploader</a> <a href="javascript:void(0);" id="lrl-opts-import-link-button" class="button-secondary">URL Import</a></p>';
 							
-							echo '<div id="bootstrap_basic-opts-import-code-wrapper">';
+							echo '<div id="lrl-opts-import-code-wrapper">';
 								echo '<textarea id="import-code-value" name="'.$this->args['opt_name'].'[import_code]" class="large-text" rows="8"></textarea>';
 							echo '</div>';
 							
-							echo '<div id="bootstrap_basic-opts-import-link-wrapper">';
+							echo '<div id="lrl-opts-import-link-wrapper">';
 								echo '<input type="text" id="import-link-value" name="'.$this->args['opt_name'].'[import_link]" class="large-text" value="" />';
 							echo '</div>';
 							
 							
-							echo '<p id="bootstrap_basic-opts-import-action"><input type="submit" id="bootstrap_basic-opts-import" name="'.$this->args['opt_name'].'[import]" class="button-primary" value="'.__('Import', 'bootstrap').'"</p>';
+							echo '<p id="lrl-opts-import-action"><input type="submit" id="lrl-opts-import" name="'.$this->args['opt_name'].'[import]" class="button-primary" value="'.__('Import', 'bootstrap').'"</p>';
 							
 			
 							
@@ -754,22 +754,22 @@ class bootstrap_basic_Options{
 							
 							echo '<h4>'.__('Export Theme Options', 'bootstrap').'</h4>';
 							
-							echo '<div class="bootstrap_basic-opts-section-desc">';
-								echo '<p class="description1">'.apply_filters('bootstrap_basic-opts-backup-description', __('Here you can copy/download your themes current option settings. Keep this safe as you can use it as a backup should anything go wrong. Or you can use it to restore your settings on this site (or any other site). You also have the handy option to copy the link to yours sites settings. Which you can then use to duplicate on another site', 'bootstrap')).'</p>';
+							echo '<div class="lrl-opts-section-desc">';
+								echo '<p class="description1">'.apply_filters('lrl-opts-backup-description', __('Here you can copy/download your themes current option settings. Keep this safe as you can use it as a backup should anything go wrong. Or you can use it to restore your settings on this site (or any other site). You also have the handy option to copy the link to yours sites settings. Which you can then use to duplicate on another site', 'bootstrap')).'</p>';
 							echo '</div>';
 							
 								echo '<p>
-								<a href="'.add_query_arg(array('feed' => 'bootstrap_basicopts-'.$this->args['opt_name'], 'action' => 'download_options', 'secret' => md5(AUTH_KEY.SECURE_AUTH_KEY)), site_url()).'" id="bootstrap_basic-opts-export-code-dl" class="button-primary">Download</a>
+								<a href="'.add_query_arg(array('feed' => 'lrlopts-'.$this->args['opt_name'], 'action' => 'download_options', 'secret' => md5(AUTH_KEY.SECURE_AUTH_KEY)), site_url()).'" id="lrl-opts-export-code-dl" class="button-primary">Download</a>
 								
-								<a href="javascript:void(0);" id="bootstrap_basic-opts-export-code-copy" class="button-secondary">Copy</a>
+								<a href="javascript:void(0);" id="lrl-opts-export-code-copy" class="button-secondary">Copy</a>
 								
-								<a href="javascript:void(0);" id="bootstrap_basic-opts-export-link" class="button-secondary">Copy Link</a></p>';
+								<a href="javascript:void(0);" id="lrl-opts-export-link" class="button-secondary">Copy Link</a></p>';
 
 								$backup_options = $this->options;
-								$backup_options['bootstrap_basic-opts-backup'] = '1';
+								$backup_options['lrl-opts-backup'] = '1';
 								$encoded_options = '###'.serialize($backup_options).'###';
-								echo '<textarea class="large-text" id="bootstrap_basic-opts-export-code" rows="8">';print_r($encoded_options);echo '</textarea>';
-								echo '<input type="text" class="large-text" id="bootstrap_basic-opts-export-link-value" value="'.add_query_arg(array('feed' => 'bootstrap_basicopts-'.$this->args['opt_name'], 'secret' => md5(AUTH_KEY.SECURE_AUTH_KEY)), site_url()).'" />';
+								echo '<textarea class="large-text" id="lrl-opts-export-code" rows="8">';print_r($encoded_options);echo '</textarea>';
+								echo '<input type="text" class="large-text" id="lrl-opts-export-link-value" value="'.add_query_arg(array('feed' => 'lrlopts-'.$this->args['opt_name'], 'secret' => md5(AUTH_KEY.SECURE_AUTH_KEY)), site_url()).'" />';
 							
 							
 							
@@ -777,11 +777,11 @@ class bootstrap_basic_Options{
 							
 							echo '<h4>'.__('Theme Options Reset', 'bootstrap').'</h4>';
 							
-							echo '<div class="bootstrap_basic-opts-section-desc">';
-								echo '<p class="description1">'.apply_filters('bootstrap_basic-opts-backup-description', __('Conduct a full reset of your current theme options  and return all settings to their default values.  ', 'bootstrap')).'</p>';
+							echo '<div class="lrl-opts-section-desc">';
+								echo '<p class="description1">'.apply_filters('lrl-opts-backup-description', __('Conduct a full reset of your current theme options  and return all settings to their default values.  ', 'bootstrap')).'</p>';
 							echo '</div>';
 							
-							echo '<div class="bootstrap_basic-opts-import-warning"><span>'.apply_filters('bootstrap_basic-opts-import-warning', __('WARNING! This will definitely reset all your theme options settings.', 'bootstrap')).'</span></div>';	
+							echo '<div class="lrl-opts-import-warning"><span>'.apply_filters('lrl-opts-import-warning', __('WARNING! This will definitely reset all your theme options settings.', 'bootstrap')).'</span></div>';	
 							
 							submit_button(__('Reset All Current Options', 'bootstrap'), 'button-primary', $this->args['opt_name'].'[defaults]', false);
 							
@@ -793,7 +793,7 @@ class bootstrap_basic_Options{
 					
 					
 					foreach($this->extra_tabs as $k => $tab){
-						echo '<div id="'.$k.'_section_group'.'" class="bootstrap_basic-opts-group-tab">';
+						echo '<div id="'.$k.'_section_group'.'" class="lrl-opts-group-tab">';
 						echo '<h3>'.$tab['title'].'</h3>';
 						echo $tab['content'];
 						echo '</div>';
@@ -802,22 +802,22 @@ class bootstrap_basic_Options{
 					
 					
 					if(true === $this->args['dev_mode']){
-						echo '<div id="dev_mode_default_section_group'.'" class="bootstrap_basic-opts-group-tab">';
+						echo '<div id="dev_mode_default_section_group'.'" class="lrl-opts-group-tab">';
 							echo '<h3>'.__('Dev Mode Info', 'bootstrap').'</h3>';
-							echo '<div class="bootstrap_basic-opts-section-desc">';
+							echo '<div class="lrl-opts-section-desc">';
 							echo '<textarea class="large-text" rows="24">'.print_r($this, true).'</textarea>';
 							echo '</div>';
 						echo '</div>';
 					}
 					
 					
-					do_action('bootstrap_basic-opts-after-section-items-'.$this->args['opt_name'], $this);
+					do_action('lrl-opts-after-section-items-'.$this->args['opt_name'], $this);
 				
 					echo '<div class="clear"></div><!--clearfix-->';
 				echo '</div>';
 				echo '<div class="clear"></div><!--clearfix-->';
 				
-				echo '<div id="bootstrap_basic-opts-footer">';
+				echo '<div id="lrl-opts-footer">';
 				
 				
 					
@@ -827,7 +827,7 @@ class bootstrap_basic_Options{
 			
 			echo '</form>';
 			
-			do_action('bootstrap_basic-opts-page-after-form-'.$this->args['opt_name']);
+			do_action('lrl-opts-page-after-form-'.$this->args['opt_name']);
 			
 			echo '<div class="clear"></div><!--clearfix-->';	
 		echo '</div><!--wrap-->';
@@ -838,12 +838,12 @@ class bootstrap_basic_Options{
 	/**
 	 * JS to display the errors on the page
 	 *
-	 * @since bootstrap_basic_Options 2.0
+	 * @since lrl_Options 2.0
 	*/	
 	function _errors_js(){
 		
-		if(isset($_GET['settings-updated']) && $_GET['settings-updated'] == 'true' && get_transient('bootstrap_basic-opts-errors-'.$this->args['opt_name'])){
-				$errors = get_transient('bootstrap_basic-opts-errors-'.$this->args['opt_name']);
+		if(isset($_GET['settings-updated']) && $_GET['settings-updated'] == 'true' && get_transient('lrl-opts-errors-'.$this->args['opt_name'])){
+				$errors = get_transient('lrl-opts-errors-'.$this->args['opt_name']);
 				$section_errors = array();
 				foreach($errors as $error){
 					$section_errors[$error['section_id']] = (isset($section_errors[$error['section_id']]))?$section_errors[$error['section_id']]:0;
@@ -852,20 +852,20 @@ class bootstrap_basic_Options{
 				
 				echo '<script type="text/javascript">';
 					echo 'jQuery(document).ready(function(){';
-						echo 'jQuery("#bootstrap_basic-opts-field-errors span").html("'.count($errors).'");';
-						echo 'jQuery("#bootstrap_basic-opts-field-errors").show();';
+						echo 'jQuery("#lrl-opts-field-errors span").html("'.count($errors).'");';
+						echo 'jQuery("#lrl-opts-field-errors").show();';
 						
 						foreach($section_errors as $sectionkey => $section_error){
-							echo 'jQuery("#'.$sectionkey.'_section_group_li_a").append("<span class=\"bootstrap_basic-opts-menu-error\">'.$section_error.'</span>");';
+							echo 'jQuery("#'.$sectionkey.'_section_group_li_a").append("<span class=\"lrl-opts-menu-error\">'.$section_error.'</span>");';
 						}
 						
 						foreach($errors as $error){
-							echo 'jQuery("#'.$error['id'].'").addClass("bootstrap_basic-opts-field-error");';
-							echo 'jQuery("#'.$error['id'].'").closest("td").append("<span class=\"bootstrap_basic-opts-th-error\">'.$error['msg'].'</span>");';
+							echo 'jQuery("#'.$error['id'].'").addClass("lrl-opts-field-error");';
+							echo 'jQuery("#'.$error['id'].'").closest("td").append("<span class=\"lrl-opts-th-error\">'.$error['msg'].'</span>");';
 						}
 					echo '});';
 				echo '</script>';
-				delete_transient('bootstrap_basic-opts-errors-'.$this->args['opt_name']);
+				delete_transient('lrl-opts-errors-'.$this->args['opt_name']);
 			}
 		
 	}//function
@@ -874,12 +874,12 @@ class bootstrap_basic_Options{
 	/**
 	 * JS to display the warnings on the page
 	 *
-	 * @since bootstrap_basic_Options 2.0
+	 * @since lrl_Options 2.0
 	*/	
 	function _warnings_js(){
 		
-		if(isset($_GET['settings-updated']) && $_GET['settings-updated'] == 'true' && get_transient('bootstrap_basic-opts-warnings-'.$this->args['opt_name'])){
-				$warnings = get_transient('bootstrap_basic-opts-warnings-'.$this->args['opt_name']);
+		if(isset($_GET['settings-updated']) && $_GET['settings-updated'] == 'true' && get_transient('lrl-opts-warnings-'.$this->args['opt_name'])){
+				$warnings = get_transient('lrl-opts-warnings-'.$this->args['opt_name']);
 				$section_warnings = array();
 				foreach($warnings as $warning){
 					$section_warnings[$warning['section_id']] = (isset($section_warnings[$warning['section_id']]))?$section_warnings[$warning['section_id']]:0;
@@ -889,20 +889,20 @@ class bootstrap_basic_Options{
 				
 				echo '<script type="text/javascript">';
 					echo 'jQuery(document).ready(function(){';
-						echo 'jQuery("#bootstrap_basic-opts-field-warnings span").html("'.count($warnings).'");';
-						echo 'jQuery("#bootstrap_basic-opts-field-warnings").show();';
+						echo 'jQuery("#lrl-opts-field-warnings span").html("'.count($warnings).'");';
+						echo 'jQuery("#lrl-opts-field-warnings").show();';
 						
 						foreach($section_warnings as $sectionkey => $section_warning){
-							echo 'jQuery("#'.$sectionkey.'_section_group_li_a").append("<span class=\"bootstrap_basic-opts-menu-warning\">'.$section_warning.'</span>");';
+							echo 'jQuery("#'.$sectionkey.'_section_group_li_a").append("<span class=\"lrl-opts-menu-warning\">'.$section_warning.'</span>");';
 						}
 						
 						foreach($warnings as $warning){
-							echo 'jQuery("#'.$warning['id'].'").addClass("bootstrap_basic-opts-field-warning");';
-							echo 'jQuery("#'.$warning['id'].'").closest("td").append("<span class=\"bootstrap_basic-opts-th-warning\">'.$warning['msg'].'</span>");';
+							echo 'jQuery("#'.$warning['id'].'").addClass("lrl-opts-field-warning");';
+							echo 'jQuery("#'.$warning['id'].'").closest("td").append("<span class=\"lrl-opts-th-warning\">'.$warning['msg'].'</span>");';
 						}
 					echo '});';
 				echo '</script>';
-				delete_transient('bootstrap_basic-opts-warnings-'.$this->args['opt_name']);
+				delete_transient('lrl-opts-warnings-'.$this->args['opt_name']);
 			}
 		
 	}//function
@@ -911,14 +911,14 @@ class bootstrap_basic_Options{
 	/**
 	 * Section HTML OUTPUT.
 	 *
-	 * @since bootstrap_basic_Options 2.0
+	 * @since lrl_Options 2.0
 	*/	
 	function _section_desc($section){
 		
 		$id = rtrim($section['id'], '_section');
 		
 		if(isset($this->sections[$id]['desc']) && !empty($this->sections[$id]['desc'])) {
-			echo '<div class="bootstrap_basic-opts-section-desc">'.$this->sections[$id]['desc'].'</div>';
+			echo '<div class="lrl-opts-section-desc">'.$this->sections[$id]['desc'].'</div>';
 		}
 		
 	}//function
@@ -929,22 +929,22 @@ class bootstrap_basic_Options{
 	 *
 	 * Gets option from options array, then calls the specific field type class - allows extending by other devs
 	 *
-	 * @since bootstrap_basic_Options 2.0
+	 * @since lrl_Options 2.0
 	*/
 	function _field_input($field){
 		
 		
 		if(isset($field['callback']) && function_exists($field['callback'])){
 			$value = (isset($this->options[$field['id']]))?$this->options[$field['id']]:'';
-			do_action('bootstrap_basic-opts-before-field-'.$this->args['opt_name'], $field, $value);
+			do_action('lrl-opts-before-field-'.$this->args['opt_name'], $field, $value);
 			call_user_func($field['callback'], $field, $value);
-			do_action('bootstrap_basic-opts-after-field-'.$this->args['opt_name'], $field, $value);
+			do_action('lrl-opts-after-field-'.$this->args['opt_name'], $field, $value);
 			return;
 		}
 		
 		if(isset($field['type'])){
 			
-			$field_class = 'bootstrap_basic_Options_'.$field['type'];
+			$field_class = 'lrl_Options_'.$field['type'];
 			
 			if(class_exists($field_class)){
 				require_once($this->dir.'fields/'.$field['type'].'/field_'.$field['type'].'.php');
@@ -952,11 +952,11 @@ class bootstrap_basic_Options{
 			
 			if(class_exists($field_class)){
 				$value = (isset($this->options[$field['id']]))?$this->options[$field['id']]:'';
-				do_action('bootstrap_basic-opts-before-field-'.$this->args['opt_name'], $field, $value);
+				do_action('lrl-opts-before-field-'.$this->args['opt_name'], $field, $value);
 				$render = '';
 				$render = new $field_class($field, $value, $this);
 				$render->render();
-				do_action('bootstrap_basic-opts-after-field-'.$this->args['opt_name'], $field, $value);
+				do_action('lrl-opts-after-field-'.$this->args['opt_name'], $field, $value);
 			}//if
 			
 		}//if $field['type']

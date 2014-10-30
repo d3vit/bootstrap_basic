@@ -62,15 +62,15 @@ $sections[] = array(
 							'options' => array(
 								'full' => array(
 									'title' => 'Full', 
-									'img' => bootstrap_basic_OPTIONS_URL.'assets/images/full.png'
+									'img' => lrl_OPTIONS_URL.'assets/images/full.png'
 								),
 								'split' => array(
 									'title' => 'Split', 
-									'img' => bootstrap_basic_OPTIONS_URL.'assets/images/split.png'
+									'img' => lrl_OPTIONS_URL.'assets/images/split.png'
 								),
 								'none' => array(
 									'title' => 'None', 
-									'img' => bootstrap_basic_OPTIONS_URL.'assets/images/none.png'
+									'img' => lrl_OPTIONS_URL.'assets/images/none.png'
 								),
 							),
 							
@@ -341,6 +341,6 @@ $sections[] = array(
   
 }
 
-add_filter('bootstrap_basic-opts-sections-bootstrap_theme', 'bootstrap_load_framework_theme_options');
+add_filter('lrl-opts-sections-bootstrap_theme', 'bootstrap_load_framework_theme_options');
 
 ?>

@@ -1,8 +1,8 @@
 <?php
 
 // Feedback specific CSS items
-add_action( 'admin_print_styles', 'bootstrap_basic_form_admin_css' );
-function bootstrap_basic_form_admin_css() {
+add_action( 'admin_print_styles', 'lrl_form_admin_css' );
+function lrl_form_admin_css() {
 	global $current_screen;
 	if ( 'edit-feedback' != $current_screen->id )
 		return;
@@ -42,14 +42,14 @@ body.no-js #doaction2 { display: none }
 }
 
 // Remove admin UI parts that we don't support in feedback management
-add_action( 'admin_menu', 'bootstrap_basic_form_admin_menu' );
-function bootstrap_basic_form_admin_menu() {
+add_action( 'admin_menu', 'lrl_form_admin_menu' );
+function lrl_form_admin_menu() {
 	global $menu, $submenu;
 	unset( $submenu['edit.php?post_type=feedback'] );
 }
 
-add_filter( 'bulk_actions-edit-feedback', 'bootstrap_basic_form_admin_bulk_actions' );
-function bootstrap_basic_form_admin_bulk_actions( $actions ) {
+add_filter( 'bulk_actions-edit-feedback', 'lrl_form_admin_bulk_actions' );
+function lrl_form_admin_bulk_actions( $actions ) {
 	global $current_screen;
 	if ( 'edit-feedback' != $current_screen->id )
 		return $actions;
@@ -58,8 +58,8 @@ function bootstrap_basic_form_admin_bulk_actions( $actions ) {
 	return $actions;
 }
 
-add_filter( 'views_edit-feedback', 'bootstrap_basic_form_admin_view_tabs' );
-function bootstrap_basic_form_admin_view_tabs( $views ) {
+add_filter( 'views_edit-feedback', 'lrl_form_admin_view_tabs' );
+function lrl_form_admin_view_tabs( $views ) {
 	global $current_screen;
 	if ( 'edit-feedback' != $current_screen->id )
 		return $actions;
@@ -73,8 +73,8 @@ function bootstrap_basic_form_admin_view_tabs( $views ) {
 	return $views;
 }
 
-add_filter( 'manage_feedback_posts_columns', 'bootstrap_basic_form_post_type_columns_filter' );
-function bootstrap_basic_form_post_type_columns_filter( $cols ) {
+add_filter( 'manage_feedback_posts_columns', 'lrl_form_post_type_columns_filter' );
+function lrl_form_post_type_columns_filter( $cols ) {
 	$cols = array(
 		'cb'	=> '<input type="checkbox" />',
 		'feedback_from'		=> __( 'From', 'bootstrap' ),
@@ -85,8 +85,8 @@ function bootstrap_basic_form_post_type_columns_filter( $cols ) {
 	return $cols;
 }
 
-add_action( 'manage_posts_custom_column', 'bootstrap_basic_form_manage_post_columns', 10, 2 );
-function bootstrap_basic_form_manage_post_columns( $col, $post_id ) {
+add_action( 'manage_posts_custom_column', 'lrl_form_manage_post_columns', 10, 2 );
+function lrl_form_manage_post_columns( $col, $post_id ) {
 	global $post;
 
 	switch ( $col ) {
@@ -164,11 +164,11 @@ jQuery(document).ready(function($) {
 $('#feedback-restore-<?php echo $post_id; ?>').click(function(e) {
 	e.preventDefault();
 	$.post(ajaxurl, {
-			action: 'bootstrap_basic_form_ajax_spam',
+			action: 'lrl_form_ajax_spam',
 			post_id: '<?php echo $post_id; ?>',
 			make_it: 'publish',
 			sub_menu: jQuery('.subsubsub .current').attr('href'),
-			_ajax_nonce: '<?php echo wp_create_nonce( 'bootstrap_basic_form-post-status-' . $post_id ); ?>'
+			_ajax_nonce: '<?php echo wp_create_nonce( 'lrl_form-post-status-' . $post_id ); ?>'
 		},
 		function(r) {
 			$('#post-<?php echo $post_id; ?>')
@@ -205,11 +205,11 @@ jQuery(document).ready( function($) {
 	$('#feedback-spam-<?php echo $post_id; ?>').click( function(e) {
 		e.preventDefault();
 		$.post( ajaxurl, {
-				action: 'bootstrap_basic_form_ajax_spam',
+				action: 'lrl_form_ajax_spam',
 				post_id: '<?php echo $post_id; ?>',
 				make_it: 'spam',
 				sub_menu: jQuery('.subsubsub .current').attr('href'),
-				_ajax_nonce: '<?php echo wp_create_nonce( 'bootstrap_basic_form-post-status-' . $post_id ); ?>'
+				_ajax_nonce: '<?php echo wp_create_nonce( 'lrl_form-post-status-' . $post_id ); ?>'
 			},
 			function( r ) {
 				$('#post-<?php echo $post_id; ?>')
@@ -224,11 +224,11 @@ jQuery(document).ready( function($) {
 	$('#feedback-trash-<?php echo $post_id; ?>').click(function(e) {
 		e.preventDefault();
 		$.post(ajaxurl, {
-				action: 'bootstrap_basic_form_ajax_spam',
+				action: 'lrl_form_ajax_spam',
 				post_id: '<?php echo $post_id; ?>',
 				make_it: 'trash',
 				sub_menu: jQuery('.subsubsub .current').attr('href'),
-				_ajax_nonce: '<?php echo wp_create_nonce( 'bootstrap_basic_form-post-status-' . $post_id ); ?>'
+				_ajax_nonce: '<?php echo wp_create_nonce( 'lrl_form-post-status-' . $post_id ); ?>'
 			},
 			function(r) {
 				$('#post-<?php echo $post_id; ?>')
@@ -263,11 +263,11 @@ jQuery(document).ready( function($) {
 	$('#feedback-ham-<?php echo $post_id; ?>').click( function(e) {
 		e.preventDefault();
 		$.post( ajaxurl, {
-				action: 'bootstrap_basic_form_ajax_spam',
+				action: 'lrl_form_ajax_spam',
 				post_id: '<?php echo $post_id; ?>',
 				make_it: 'ham',
 				sub_menu: jQuery('.subsubsub .current').attr('href'),
-				_ajax_nonce: '<?php echo wp_create_nonce( 'bootstrap_basic_form-post-status-' . $post_id ); ?>'
+				_ajax_nonce: '<?php echo wp_create_nonce( 'lrl_form-post-status-' . $post_id ); ?>'
 			},
 			function( r ) {
 				$('#post-<?php echo $post_id; ?>')
@@ -291,7 +291,7 @@ jQuery(document).ready( function($) {
 	}
 }
 
-function bootstrap_basic_form_esc_attr( $attr ) {
+function lrl_form_esc_attr( $attr ) {
 	$out = esc_attr( $attr );
 	// we also have to entity-encode square brackets so they don't interfere with the shortcode parser
 	// FIXME: do this better - just stripping out square brackets for now since they mysteriously keep reappearing
@@ -300,7 +300,7 @@ function bootstrap_basic_form_esc_attr( $attr ) {
 	return $out;
 }
 
-function bootstrap_basic_form_sort_objects( $a, $b ) {
+function lrl_form_sort_objects( $a, $b ) {
 	if ( isset($a['order']) && isset($b['order']) )
 		return $a['order'] - $b['order'];
 	return 0;
@@ -308,19 +308,19 @@ function bootstrap_basic_form_sort_objects( $a, $b ) {
 
 // take an array of field types from the form builder, and construct a shortcode form
 // returns both the shortcode form, and HTML markup representing a preview of the form
-function bootstrap_basic_form_ajax_shortcode() {
-	check_ajax_referer( 'bootstrap_basic_form_shortcode' );
+function lrl_form_ajax_shortcode() {
+	check_ajax_referer( 'lrl_form_shortcode' );
 	
 	$atts = '';
 	if ( trim( $_POST['subject'] ) )
-		$atts .= ' subject="'.bootstrap_basic_form_esc_attr($_POST['subject']).'"';
+		$atts .= ' subject="'.lrl_form_esc_attr($_POST['subject']).'"';
 	if ( trim( $_POST['to'] ) )
-		$atts .= ' to="'.bootstrap_basic_form_esc_attr($_POST['to']).'"';
+		$atts .= ' to="'.lrl_form_esc_attr($_POST['to']).'"';
 		
 	$shortcode = '[contact-form'.$atts.']';
 	$shortcode .= "\n";
 	if ( is_array( $_POST['fields'] ) ) {
-		usort( $_POST['fields'], 'bootstrap_basic_form_sort_objects' );
+		usort( $_POST['fields'], 'lrl_form_sort_objects' );
 		foreach ( $_POST['fields'] as $field ) {
 			$req = $opts = '';
 			if ( $field['required'] == 'true' )
@@ -329,7 +329,7 @@ function bootstrap_basic_form_ajax_shortcode() {
 				$opts = ' options="';
 				foreach ( $field['options'] as $option ) {
 					$option = wp_kses( $option, array() );
-					$option = bootstrap_basic_form_esc_attr( $option );
+					$option = lrl_form_esc_attr( $option );
 
 					# we need to be very specific about how we
 					# encode these values
@@ -346,7 +346,7 @@ function bootstrap_basic_form_ajax_shortcode() {
 			$field['label'] = wp_kses( $field['label'], array() );
 			$field['label'] = str_replace( '"', '&#x0022;', $field['label'] );
 
-			$shortcode .= '[contact-field label="'. $field['label'] .'" type="'.bootstrap_basic_form_esc_attr($field['type']).'"' . $req . $opts .' /]'."\n";
+			$shortcode .= '[contact-field label="'. $field['label'] .'" type="'.lrl_form_esc_attr($field['type']).'"' . $req . $opts .' /]'."\n";
 		}
 	}
 	$shortcode .= '[/contact-form]';
@@ -356,30 +356,30 @@ function bootstrap_basic_form_ajax_shortcode() {
 
 // takes a post_id, extracts the contact-form shortcode from that post (if there is one), parses it,
 // and constructs a json object representing its contents and attributes
-function bootstrap_basic_form_ajax_shortcode_to_json() {
-	global $post, $bootstrap_basic_form_form;
+function lrl_form_ajax_shortcode_to_json() {
+	global $post, $lrl_form_form;
 	
-	check_ajax_referer( 'bootstrap_basic_form_shortcode_to_json' );
+	check_ajax_referer( 'lrl_form_shortcode_to_json' );
 	if ( isset( $_POST['content'] ) && is_numeric( $_POST['post_id'] ) ) {
 		$content = stripslashes( $_POST['content'] );
 		$post = get_post( $_POST['post_id'] );
 		// does it look like a post with a [contact-form] already?
 		if ( strpos( $content, '[contact-form' ) !== false ) {
 			$out = do_shortcode( $content );
-			global $bootstrap_basic_contact_form_fields;
-			if ( is_array($bootstrap_basic_contact_form_fields) && !empty($bootstrap_basic_contact_form_fields) ) {
-				foreach ( $bootstrap_basic_contact_form_fields as $field_id => $field ) {
+			global $lrl_contact_form_fields;
+			if ( is_array($lrl_contact_form_fields) && !empty($lrl_contact_form_fields) ) {
+				foreach ( $lrl_contact_form_fields as $field_id => $field ) {
 					# need to dig deeper on select field options
 					if ( preg_match( "|^(.*)\-select$|", $field_id ) ) {
 						foreach ( (array) $field['options'] as $opt_i => $opt ) {
-							$bootstrap_basic_contact_form_fields[$field_id]['options'][$opt_i] = html_entity_decode( $opt );
+							$lrl_contact_form_fields[$field_id]['options'][$opt_i] = html_entity_decode( $opt );
 						}
 					}
-					$bootstrap_basic_contact_form_fields[$field_id]['label'] = html_entity_decode( $bootstrap_basic_contact_form_fields[$field_id]['label'] );
-					$bootstrap_basic_contact_form_fields[$field_id]['label'] = wp_kses( $bootstrap_basic_contact_form_fields[$field_id]['label'], array() );
+					$lrl_contact_form_fields[$field_id]['label'] = html_entity_decode( $lrl_contact_form_fields[$field_id]['label'] );
+					$lrl_contact_form_fields[$field_id]['label'] = wp_kses( $lrl_contact_form_fields[$field_id]['label'], array() );
 				}
 
-				$out = array( 'fields' => $bootstrap_basic_contact_form_fields, 'to' => $bootstrap_basic_form_form->to, 'subject' => $bootstrap_basic_form_form->subject );
+				$out = array( 'fields' => $lrl_contact_form_fields, 'to' => $lrl_form_form->to, 'subject' => $lrl_form_form->subject );
 				die( json_encode( $out ) );
 			}
 		}
@@ -390,20 +390,20 @@ function bootstrap_basic_form_ajax_shortcode_to_json() {
 }
 
 
-add_action( 'wp_ajax_bootstrap_basic_form_shortcode', 'bootstrap_basic_form_ajax_shortcode' );
-add_action( 'wp_ajax_bootstrap_basic_form_shortcode_to_json', 'bootstrap_basic_form_ajax_shortcode_to_json' );
+add_action( 'wp_ajax_lrl_form_shortcode', 'lrl_form_ajax_shortcode' );
+add_action( 'wp_ajax_lrl_form_shortcode_to_json', 'lrl_form_ajax_shortcode_to_json' );
 
 
 // process row-action spam/not spam clicks
-add_action( 'wp_ajax_bootstrap_basic_form_ajax_spam', 'bootstrap_basic_form_ajax_spam' );
-function bootstrap_basic_form_ajax_spam() {
+add_action( 'wp_ajax_lrl_form_ajax_spam', 'lrl_form_ajax_spam' );
+function lrl_form_ajax_spam() {
 	global $wpdb;
 
 	if ( empty( $_POST['make_it'] ) )
 		return;
 
 	$post_id = (int) $_POST['post_id'];
-	check_ajax_referer( 'bootstrap_basic_form-post-status-' . $post_id );
+	check_ajax_referer( 'lrl_form-post-status-' . $post_id );
 	if ( !current_user_can("edit_page", $post_id) )
 		wp_die( __( 'You are not allowed to manage this item.', 'bootstrap' ) );
 

@@ -38,10 +38,10 @@ if(!function_exists('bootstrap_index_pagination')) {
 		$method = "get_pagenum_link";
 		if(is_single())
 		{
-			$method = "bootstrap_basic_post_pagination_link";
+			$method = "lrl_post_pagination_link";
 		}
 		
-		$archive_nav= "bootstrap_basic_post_pagination_link";
+		$archive_nav= "lrl_post_pagination_link";
 		
 		
 		if(1 != $pages)
@@ -72,7 +72,7 @@ if(!function_exists('bootstrap_index_pagination')) {
 		return $output;
 	}
 	
-	function bootstrap_basic_post_pagination_link($link){
+	function lrl_post_pagination_link($link){
 		$url =  preg_replace('!">$!','',_wp_link_page($link));
 		$url =  preg_replace('!^<a href="!','',$url);
 		return $url;

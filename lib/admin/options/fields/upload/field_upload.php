@@ -1,12 +1,12 @@
 <?php
-class bootstrap_basic_Options_upload extends bootstrap_basic_Options{	
+class lrl_Options_upload extends lrl_Options{	
 	
 	/**
 	 * Field Constructor.
 	 *
 	 * Required - must call the parent constructor, then assign field and value to vars, and obviously call the render field function
 	 *
-	 * @since bootstrap_basic_Options 1.0
+	 * @since lrl_Options 1.0
 	*/
 	function __construct($field = array(), $value ='', $parent = ''){
 		
@@ -23,7 +23,7 @@ class bootstrap_basic_Options_upload extends bootstrap_basic_Options{
 	 *
 	 * Takes the vars and outputs the HTML for the field in the settings
 	 *
-	 * @since bootstrap_basic_Options 1.0
+	 * @since lrl_Options 1.0
 	*/
 	function render(){
 		
@@ -32,12 +32,12 @@ class bootstrap_basic_Options_upload extends bootstrap_basic_Options{
 		
 		echo '<input type="hidden" id="'.$this->field['id'].'" name="'.$this->args['opt_name'].'['.$this->field['id'].']" value="'.$this->value.'" class="'.$class.'" />';
 		//if($this->value != ''){
-			echo '<img class="bootstrap_basic-opts-screenshot" id="bootstrap_basic-opts-screenshot-'.$this->field['id'].'" src="'.$this->value.'" />';
+			echo '<img class="lrl-opts-screenshot" id="lrl-opts-screenshot-'.$this->field['id'].'" src="'.$this->value.'" />';
 		//}
 		
 		if($this->value == ''){$remove = ' style="display:none;"';$upload = '';}else{$remove = '';$upload = ' style="display:none;"';}
-		echo ' <a href="javascript:void(0);" class="bootstrap_basic-opts-upload button-secondary"'.$upload.' rel-id="'.$this->field['id'].'">'.__('Browse', 'bootstrap').'</a>';
-		echo ' <a href="javascript:void(0);" class="bootstrap_basic-opts-upload-remove"'.$remove.' rel-id="'.$this->field['id'].'"><img src="'.bootstrap_basic_OPTIONS_URL.'assets/images/icon-delete-small.png" alt="'.__('Remove Upload', 'bootstrap').'"/></a>';
+		echo ' <a href="javascript:void(0);" class="lrl-opts-upload button-secondary"'.$upload.' rel-id="'.$this->field['id'].'">'.__('Browse', 'bootstrap').'</a>';
+		echo ' <a href="javascript:void(0);" class="lrl-opts-upload-remove"'.$remove.' rel-id="'.$this->field['id'].'"><img src="'.lrl_OPTIONS_URL.'assets/images/icon-delete-small.png" alt="'.__('Remove Upload', 'bootstrap').'"/></a>';
 		
 		echo (isset($this->field['desc']) && !empty($this->field['desc']))?'<br/><br/><span class="description">'.$this->field['desc'].'</span>':'';
 		
@@ -50,13 +50,13 @@ class bootstrap_basic_Options_upload extends bootstrap_basic_Options{
 	 *
 	 * If this field requires any scripts, or css define this function and register/enqueue the scripts/css
 	 *
-	 * @since bootstrap_basic_Options 1.0
+	 * @since lrl_Options 1.0
 	*/
 	function enqueue(){
 		
 		wp_enqueue_script(
-			'bootstrap_basic-opts-field-upload-js', 
-			bootstrap_basic_OPTIONS_URL.'fields/upload/field_upload.js', 
+			'lrl-opts-field-upload-js', 
+			lrl_OPTIONS_URL.'fields/upload/field_upload.js', 
 			array('jquery', 'thickbox', 'media-upload'),
 			time(),
 			true
@@ -64,7 +64,7 @@ class bootstrap_basic_Options_upload extends bootstrap_basic_Options{
 		
 		wp_enqueue_style('thickbox');// thanks to https://github.com/rzepak
 		
-		wp_localize_script('bootstrap_basic-opts-field-upload-js', 'bootstrap_basic_upload', array('url' => $this->url.'fields/upload/blank.png'));
+		wp_localize_script('lrl-opts-field-upload-js', 'lrl_upload', array('url' => $this->url.'fields/upload/blank.png'));
 		
 	}//function
 	
