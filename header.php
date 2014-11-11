@@ -52,18 +52,23 @@ else
             	<img src="<?php bloginfo( 'template_url' ); ?>/img/" alt="" />
             </a>
         </div>
-        <nav class="navbar navbar-default">
-            <div id="main-navigation" class="navbar navbar-default" role="navigation">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                </div>
-                <div class="collapse navbar-collapse" id="navbar-collapse">
-                    <?php wp_nav_menu (array('menu' => 'Primary Menu', 'menu_class' => 'nav navbar-nav', 'container' => '') ); ?>
-                </div><!-- /.navbar-collapse -->
+        <div id="main-navigation" class="navbar navbar-default" role="navigation">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
             </div>
-        </nav>
+            <div class="collapse navbar-collapse" id="navbar-collapse">
+                <?php 
+					wp_nav_menu (
+						array('menu' => 'Primary Menu', 
+						'menu_class' => 'nav navbar-nav', 
+						'container' => '') 
+					); 
+				?>
+                
+            </div><!-- /.navbar-collapse -->
+        </div>
