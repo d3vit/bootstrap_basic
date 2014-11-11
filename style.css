@@ -19,21 +19,31 @@ a img {
 	border: none;	
 }
 
+.alignnone {
+	float: none;	
+	text-align: inherit;
+}
 .aligncenter {
-	display: block;
-	margin: 0 auto;
-	text-align: center;	
+	text-align: center;
 }
-
+	img.aligncenter  {
+		display: block;
+		margin: 0 auto;	
+	}
 .alignleft {
-	float: left;
-	margin: 10px 10px 10px 0;	
+	text-align:left;	
 }
-
+	img.alignleft {
+		float: left;
+		margin: 10px 10px 10px 0;	
+	}
 .alignright {
-	float: right;
-	margin: 10px 0 10px 10px;	
+	text-align:right;	
 }
+	img.alignright {
+		float:right;	
+		margin: 10px 0 10px 10px;
+	}
 
 td {
 	vertical-align:top;	
