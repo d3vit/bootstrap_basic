@@ -5,6 +5,7 @@ require("lib/admin/options/options-init.php");
 require("lib/functions/theme-options.php");
 
 add_theme_support( 'automatic-feed-links' );
+add_theme_support( 'woocommerce' );
 
 if ( function_exists('register_sidebar') ) {
 
