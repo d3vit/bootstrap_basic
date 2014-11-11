@@ -1,6 +1,6 @@
 <?php
-//define('bootstrap_basic_OPTIONS_URL', site_url('path the options folder'));
-if(!class_exists('bootstrap_basic_Options')){
+//define('lrl_OPTIONS_URL', site_url('path the options folder'));
+if(!class_exists('lrl_Options')){
 	require_once( BOOTSTRAP_ADMIN_DIR. '/options/options.php' );
 }
 
@@ -14,7 +14,7 @@ if(!class_exists('bootstrap_basic_Options')){
  *
  */
 
-function setup_bootstrap_basic_framework_options(){
+function setup_lrl_framework_options(){
 
 $args = array();
 
@@ -66,12 +66,12 @@ $args['allow_sub_menu'] = false;
 		
 /*//Set ANY custom page help tabs - displayed using the new help tab API, show in order of definition		
 $args['help_tabs'][] = array(
-							'id' => 'bootstrap_basic-opts-1',
+							'id' => 'lrl-opts-1',
 							'title' => __('Theme Information 1', 'bootstrap'),
 							'content' => __('<p>This is the tab content, HTML is allowed.</p>', 'bootstrap')
 							);
 $args['help_tabs'][] = array(
-							'id' => 'bootstrap_basic-opts-2',
+							'id' => 'lrl-opts-2',
 							'title' => __('Theme Information 2', 'bootstrap'),
 							'content' => __('<p>This is the tab content, HTML is allowed.</p>', 'bootstrap')
 							);
@@ -95,19 +95,19 @@ if( DEV_MODE ) {
  	global $wp_version;
  	
  	
-	$theme_info = '<div class="bootstrap_basic-opts-section-desc">';
-	$theme_info .= '<p class="bootstrap_basic-opts-theme-data description theme-uri">'.__('<strong>Theme URL:</strong> ', 'bootstrap').'<a href="'.$theme_uri.'" target="_blank">'.$theme_uri.'</a></p>';
-	$theme_info .= '<p class="bootstrap_basic-opts-theme-data description theme-author">'.__('<strong>Author:</strong> ', 'bootstrap').$author.'</p>';
-	$theme_info .= '<p class="bootstrap_basic-opts-theme-data description theme-version">'.__('<strong>Version:</strong> ', 'bootstrap').$version.'</p>';
-	$theme_info .= '<p class="bootstrap_basic-opts-theme-data description theme-description">'.$description.'</p>';
-  	$theme_info .= '<p class="bootstrap_basic-opts-theme-data description php-version"> PHP Version: '.PHP_VERSION.'</b></p>';
- 	$theme_info .= '<p class="bootstrap_basic-opts-theme-data description wp-version">WordPress Version: '.$wp_version.'</p>';
+	$theme_info = '<div class="lrl-opts-section-desc">';
+	$theme_info .= '<p class="lrl-opts-theme-data description theme-uri">'.__('<strong>Theme URL:</strong> ', 'bootstrap').'<a href="'.$theme_uri.'" target="_blank">'.$theme_uri.'</a></p>';
+	$theme_info .= '<p class="lrl-opts-theme-data description theme-author">'.__('<strong>Author:</strong> ', 'bootstrap').$author.'</p>';
+	$theme_info .= '<p class="lrl-opts-theme-data description theme-version">'.__('<strong>Version:</strong> ', 'bootstrap').$version.'</p>';
+	$theme_info .= '<p class="lrl-opts-theme-data description theme-description">'.$description.'</p>';
+  	$theme_info .= '<p class="lrl-opts-theme-data description php-version"> PHP Version: '.PHP_VERSION.'</b></p>';
+ 	$theme_info .= '<p class="lrl-opts-theme-data description wp-version">WordPress Version: '.$wp_version.'</p>';
  	$theme_info .= '</div>';
 }
 
-global $bootstrap_basic_Options;
-$bootstrap_basic_Options = new bootstrap_basic_Options($sections, $args, $tabs);
+global $lrl_Options;
+$lrl_Options = new lrl_Options($sections, $args, $tabs);
 
 
 }
-add_action('init', 'setup_bootstrap_basic_framework_options', 0);
+add_action('init', 'setup_lrl_framework_options', 0);

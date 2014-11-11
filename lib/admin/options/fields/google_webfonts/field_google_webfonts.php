@@ -1,12 +1,12 @@
 <?php
-class bootstrap_basic_Options_google_webfonts extends bootstrap_basic_Options{	
+class lrl_Options_google_webfonts extends lrl_Options{	
 	
 	/**
 	 * Field Constructor.
 	 *
 	 * Required - must call the parent constructor, then assign field and value to vars, and obviously call the render field function
 	 *
-	 * @since bootstrap_basic_Options 1.0
+	 * @since lrl_Options 1.0
 	*/
 	function __construct($field = array(), $value ='', $parent){
 		
@@ -15,12 +15,12 @@ class bootstrap_basic_Options_google_webfonts extends bootstrap_basic_Options{
 		$this->value = $value;
 		$this->field['fonts'] = array();
 		
-		$fonts = get_transient('bootstrap_basic-opts-google-webfonts');
+		$fonts = get_transient('lrl-opts-google-webfonts');
 		if(!is_array(json_decode($fonts))){
 			
 			$fonts = wp_remote_retrieve_body(wp_remote_get('https://www.googleapis.com/webfonts/v1/webfonts?key='.$this->args['google_api_key']));
 			
-			set_transient('bootstrap_basic-opts-google-webfonts', $fonts, 60 * 60 * 24);
+			set_transient('lrl-opts-google-webfonts', $fonts, 60 * 60 * 24);
 				
 		}
 		$this->field['fonts'] = json_decode($fonts);
@@ -34,7 +34,7 @@ class bootstrap_basic_Options_google_webfonts extends bootstrap_basic_Options{
 	 *
 	 * Takes the vars and outputs the HTML for the field in the settings
 	 *
-	 * @since bootstrap_basic_Options 1.0
+	 * @since lrl_Options 1.0
 	*/
 	function render(){
 

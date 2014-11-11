@@ -1,6 +1,6 @@
 <?php
 /*-----------------------------------------------------------------------------------*
-* bootstrap_basic Image Resize Based on Aqua Resizer https://github.com/sy4mil/Aqua-Resizer
+* lrl Image Resize Based on Aqua Resizer https://github.com/sy4mil/Aqua-Resizer
 
 * Title		: Aqua Resizer
 * Description	: Resizes WordPress images on the fly
@@ -22,7 +22,7 @@
 * @return str|array
 /*-----------------------------------------------------------------------------------*/
 
-function bootstrap_basic_resize( $url, $width, $height = null, $crop = null, $single = true ) {
+function lrl_resize( $url, $width, $height = null, $crop = null, $single = true ) {
 	
 	//Validate inputs
 	if(!$url OR !$width ) return false;
@@ -125,7 +125,7 @@ function bootstrap_basic_resize( $url, $width, $height = null, $crop = null, $si
 /* Customized the output of caption, you can remove the filter to restore back to the WP default output. 
    Courtesy of DevPress. http://devpress.com/blog/captions-in-wordpress/ */
    
-function bootstrap_basic_cleaner_caption( $output, $attr, $content ) {
+function lrl_cleaner_caption( $output, $attr, $content ) {
 
      /* We're not worried about captions in feeds, so just return the output here. */
      if ( is_feed() )
@@ -166,7 +166,7 @@ function bootstrap_basic_cleaner_caption( $output, $attr, $content ) {
      /* Return the formatted, clean caption. */
      return $output;
 }
-add_filter( 'img_caption_shortcode', 'bootstrap_basic_cleaner_caption', 10, 3 );
+add_filter( 'img_caption_shortcode', 'lrl_cleaner_caption', 10, 3 );
 
 // Clean the output of attributes of images in editor. Courtesy of SitePoint. http://www.sitepoint.com/wordpress-change-img-tag-html/
 function image_tag_class($class, $id, $align, $size) {
@@ -207,8 +207,8 @@ function img_unautop($string) {
 }
 add_filter( 'the_content', 'img_unautop', 30 );
 
-if ( !function_exists( 'bootstrap_basic_gallery' ) ) {
-    function bootstrap_basic_gallery($postid, $image_w, $image_h = null, $crop = null ) { 
+if ( !function_exists( 'lrl_gallery' ) ) {
+    function lrl_gallery($postid, $image_w, $image_h = null, $crop = null ) { 
      
     //Validate inputs
     if(!$postid OR !$image_w ) return false;
@@ -275,7 +275,7 @@ if ( !function_exists( 'bootstrap_basic_gallery' ) ) {
 					              if( $attachment->ID == $thumbid ) continue;
 					              
 					              $src = wp_get_attachment_image_src( $attachment->ID, 'full' );
-						              $image = bootstrap_basic_resize( $src[0], $image_w, $image_h, $crop ); //resize & crop the image
+						              $image = lrl_resize( $src[0], $image_w, $image_h, $crop ); //resize & crop the image
 					              
 					              $caption = $attachment->post_excerpt;
 					              $caption = ($caption) ? "<div class='slider-desc'><span class='gallery-caption'>$caption</span></div>" : '';
@@ -308,11 +308,11 @@ if ( !function_exists( 'bootstrap_audio' ) ) {
 
 	function bootstrap_audio($postid) {
 
-		$mp3 = get_post_meta($postid, '_bootstrap_basic_audio_mp3', TRUE);
-		$ogg = get_post_meta($postid, '_bootstrap_basic_audio_ogg', TRUE);
-		$poster = get_post_meta($postid, '_bootstrap_basic_audio_poster', TRUE);
-		$height = get_post_meta($postid, '_bootstrap_basic_poster_height', TRUE);
-		//$width = get_post_meta($postid, '_bootstrap_basic_poster_width', true);
+		$mp3 = get_post_meta($postid, '_lrl_audio_mp3', TRUE);
+		$ogg = get_post_meta($postid, '_lrl_audio_ogg', TRUE);
+		$poster = get_post_meta($postid, '_lrl_audio_poster', TRUE);
+		$height = get_post_meta($postid, '_lrl_poster_height', TRUE);
+		//$width = get_post_meta($postid, '_lrl_poster_width', true);
 		
 		?>
 
@@ -445,12 +445,12 @@ if ( !function_exists( 'bootstrap_audio' ) ) {
 /*-----------------------------------------------------------------------------------*/
 /* OUTPUT VIDEO
 /*-----------------------------------------------------------------------------------*/
-function bootstrap_basic_video($postid) {
+function lrl_video($postid) {
 	
-	$height = get_post_meta($postid, '_bootstrap_basic_video_height', true);
-	$m4v = get_post_meta($postid, '_bootstrap_basic_video_m4v', true);
-	$ogv = get_post_meta($postid, '_bootstrap_basic_video_ogv', true);
-	$poster = get_post_meta($postid, '_bootstrap_basic_video_poster', true);
+	$height = get_post_meta($postid, '_lrl_video_height', true);
+	$m4v = get_post_meta($postid, '_lrl_video_m4v', true);
+	$ogv = get_post_meta($postid, '_lrl_video_ogv', true);
+	$poster = get_post_meta($postid, '_lrl_video_poster', true);
 	
 	?>
  
@@ -562,7 +562,7 @@ function bootstrap_basic_video($postid) {
 /*-----------------------------------------------------------------------------------*/
 /* CONVERT A HEX DECIMAL COLOR CODE TO ITS RGB EQUIVALENT AND VICE VERSA
 /*-----------------------------------------------------------------------------------*/
-function bootstrap_basic_rgb2hex( $c ){
+function lrl_rgb2hex( $c ){
    if ( ! $c ) return false;
    $c = trim( $c );
    $out = false;
@@ -598,13 +598,13 @@ function bootstrap_basic_rgb2hex( $c ){
 /*-----------------------------------------------------------------------------------*/
 /* PERFORM ADDING OR SUBTRACTING OPERATION ON A HEXADECIMAL COLOR CODE
 /*-----------------------------------------------------------------------------------*/
-function bootstrap_basic_hex_addition( $hex, $num ){
-	$rgb = bootstrap_basic_rgb2hex( $hex );
+function lrl_hex_addition( $hex, $num ){
+	$rgb = lrl_rgb2hex( $hex );
 	foreach ( $rgb as $key => $val ) {
 		$rgb[$key] += $num;
 		$rgb[$key] = ( $rgb[$key] < 0) ? 0 : $rgb[$key];
 	}
-	$hex = bootstrap_basic_rgb2hex( implode( ',', $rgb ) );
+	$hex = lrl_rgb2hex( implode( ',', $rgb ) );
 	
 	return $hex;
 }

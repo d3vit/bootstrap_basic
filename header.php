@@ -45,7 +45,7 @@ if (is_single() || is_category())
 else
 	$class = "";
 ?>
-<body <? body_class($class);?>>
+<body <?php body_class($class);?>>
 	<div class="container">
         <div id="logo">
         	<a href="<?php home_url(); ?>">

@@ -1,12 +1,12 @@
 <?php
-class bootstrap_basic_Options_pages_select extends bootstrap_basic_Options{	
+class lrl_Options_pages_select extends lrl_Options{	
 	
 	/**
 	 * Field Constructor.
 	 *
 	 * Required - must call the parent constructor, then assign field and value to vars, and obviously call the render field function
 	 *
-	 * @since bootstrap_basic_Options 1.0.1
+	 * @since lrl_Options 1.0.1
 	*/
 	function __construct($field = array(), $value ='', $parent){
 		
@@ -24,7 +24,7 @@ class bootstrap_basic_Options_pages_select extends bootstrap_basic_Options{
 	 *
 	 * Takes the vars and outputs the HTML for the field in the settings
 	 *
-	 * @since bootstrap_basic_Options 1.0.1
+	 * @since lrl_Options 1.0.1
 	*/
 	function render(){
 		

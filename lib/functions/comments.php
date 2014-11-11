@@ -3,21 +3,21 @@
 /*-----------------------------------------------------------------------------------
 	Switch off Comments on Pages by default. Thanks to http://wordpress.org/support/topic/turn-page-comments-off-by-default-311#post-2433904
 -----------------------------------------------------------------------------------*/
-function bootstrap_basic_default_comments_off( $data ) {
+function lrl_default_comments_off( $data ) {
     if( $data['post_type'] == 'page' && $data['post_status'] == 'auto-draft' ) {
         $data['comment_status'] = 0;
     }
 
     return $data;
 }
-add_filter( 'wp_insert_post_data', 'bootstrap_basic_default_comments_off' );
+add_filter( 'wp_insert_post_data', 'lrl_default_comments_off' );
 
 
 /*-----------------------------------------------------------------------------------
 	Comments
 -----------------------------------------------------------------------------------*/
 // Custom callback to list pings
-function bootstrap_basic_custom_pings($comment, $args, $depth) {
+function lrl_custom_pings($comment, $args, $depth) {
    $GLOBALS['comment'] = $comment;
     ?>
 	<li id="comment-<?php comment_ID() ?>" <?php comment_class() ?>>
@@ -40,7 +40,7 @@ function bootstrap_basic_custom_pings($comment, $args, $depth) {
 /*-----------------------------------------------------------------------------------
 	Comments form
 -----------------------------------------------------------------------------------*/
- function bootstrap_basic_custom_form_filters( $args = array(), $post_id = null ) {
+ function lrl_custom_form_filters( $args = array(), $post_id = null ) {
 
 	global $id;
 	
@@ -90,7 +90,7 @@ function bootstrap_basic_custom_pings($comment, $args, $depth) {
 		'comment_notes_after'  => null,
 		'id_form'              => 'commentform',
 		'id_submit'            => 'submit',
-		'title_reply'          => sprintf( __( 'Have a Comment?', 'bootstrap' ), apply_filters( 'bootstrap_basic_comment_form_message', $custom_comment_message ) ), 
+		'title_reply'          => sprintf( __( 'Have a Comment?', 'bootstrap' ), apply_filters( 'lrl_comment_form_message', $custom_comment_message ) ), 
 		'title_reply_to'       => __( 'Leave a Reply to %s', 'bootstrap' ),
 		'cancel_reply_link'    => __( 'Cancel', 'bootstrap' ),
 		'label_submit'         => __( 'Submit Comment', 'bootstrap' ),
@@ -100,4 +100,4 @@ function bootstrap_basic_custom_pings($comment, $args, $depth) {
 
 }
 
-add_filter( 'comment_form_defaults', 'bootstrap_basic_custom_form_filters' );
+add_filter( 'comment_form_defaults', 'lrl_custom_form_filters' );

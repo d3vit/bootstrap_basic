@@ -1,12 +1,12 @@
 <?php
-class bootstrap_basic_Options_color_gradient extends bootstrap_basic_Options{	
+class lrl_Options_color_gradient extends lrl_Options{	
 	
 	/**
 	 * Field Constructor.
 	 *
 	 * Required - must call the parent constructor, then assign field and value to vars, and obviously call the render field function
 	 *
-	 * @since bootstrap_basic_Options 1.0
+	 * @since lrl_Options 1.0
 	*/
 	function __construct($field = array(), $value ='', $parent){
 		
@@ -24,7 +24,7 @@ class bootstrap_basic_Options_color_gradient extends bootstrap_basic_Options{
 	 *
 	 * Takes the vars and outputs the HTML for the field in the settings
 	 *
-	 * @since bootstrap_basic_Options 1.0
+	 * @since lrl_Options 1.0
 	*/
 	function render(){
 		
@@ -50,13 +50,13 @@ class bootstrap_basic_Options_color_gradient extends bootstrap_basic_Options{
 	 *
 	 * If this field requires any scripts, or css define this function and register/enqueue the scripts/css
 	 *
-	 * @since bootstrap_basic_Options 1.0
+	 * @since lrl_Options 1.0
 	*/
 	function enqueue(){
 		
 		wp_enqueue_script(
-			'bootstrap_basic-opts-field-color-js', 
-			bootstrap_basic_OPTIONS_URL.'fields/color/field_color.js', 
+			'lrl-opts-field-color-js', 
+			lrl_OPTIONS_URL.'fields/color/field_color.js', 
 			array('jquery', 'farbtastic'),
 			time(),
 			true

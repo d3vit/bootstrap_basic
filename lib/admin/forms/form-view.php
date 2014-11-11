@@ -3,8 +3,8 @@
  * Template for Form Builder.
  */
 
-wp_register_script( 'bootstrap_basic_form', BOOTSTRAP_FORMS_DIR . '/js/bootstrap_basic_form.js', array( 'jquery-ui-sortable', 'jquery-ui-draggable' ), '1.0' );
-wp_localize_script( 'bootstrap_basic_form', 'GrunionFB_i18n', array(
+wp_register_script( 'lrl_form', BOOTSTRAP_FORMS_DIR . '/js/lrl_form.js', array( 'jquery-ui-sortable', 'jquery-ui-draggable' ), '1.0' );
+wp_localize_script( 'lrl_form', 'GrunionFB_i18n', array(
 	'nameLabel' => esc_attr( _x( 'Name', 'Label for HTML form "Name" field in contact form builder', 'bootstrap' ) ),
 	'emailLabel' => esc_attr( _x( 'Email', 'Label for HTML form "Email" field in contact form builder', 'bootstrap' ) ),
 	'urlLabel' => esc_attr( _x( 'Website', 'Label for HTML form "URL/Website" field in contact form builder', 'bootstrap' ) ),
@@ -31,10 +31,10 @@ wp_localize_script( 'bootstrap_basic_form', 'GrunionFB_i18n', array(
 <script type="text/javascript">
 	var ajaxurl = '<?php echo admin_url('admin-ajax.php'); ?>';
 	var postId = <?php echo absint( $_GET['post_id'] ); ?>;
-	var ajax_nonce_shortcode = '<?php echo wp_create_nonce( 'bootstrap_basic_form_shortcode' ); ?>';
-	var ajax_nonce_json = '<?php echo wp_create_nonce( 'bootstrap_basic_form_shortcode_to_json' ); ?>';
+	var ajax_nonce_shortcode = '<?php echo wp_create_nonce( 'lrl_form_shortcode' ); ?>';
+	var ajax_nonce_json = '<?php echo wp_create_nonce( 'lrl_form_shortcode_to_json' ); ?>';
 </script>
-<?php wp_print_scripts( 'bootstrap_basic_form' ); ?>
+<?php wp_print_scripts( 'lrl_form' ); ?>
 <script type="text/javascript">
 	jQuery(document).ready(function () {
 		FB.ContactForm.init();
