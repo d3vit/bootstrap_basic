@@ -33,7 +33,7 @@
 				</div> <!-- end row -->
             </div>    
 		</div>
-	<?
+	<?php
 	endwhile;
 	get_footer();
 
