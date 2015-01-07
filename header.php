@@ -19,7 +19,6 @@ $options = get_option('bootstrap_theme');
     <title><?php if (is_front_page()) : echo bloginfo( 'name' ) . ' | '; echo bloginfo( 'description'); else: wp_title(""); echo ' | '; echo bloginfo( 'name' ); endif; ?></title>
 
     <link rel="shortcut icon" type="image/ico" href="<?php bloginfo( 'template_url' ); ?>/favicon.ico">
-    <link href="<?php bloginfo( 'template_url' ); ?>/css/reset.css" rel="stylesheet">
     <link href="<?php bloginfo( 'template_url' ); ?>/css/bootstrap.min.css" rel="stylesheet">
     <link href="<?php bloginfo( 'template_url' ); ?>/css/bootstrap-theme.min.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>

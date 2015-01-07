@@ -1,17 +1,18 @@
-@media (max-width: 1024px) {
+@media (min-width: 240px) {	
 
 }
-@media (max-width: 979px) {
+@media (min-width: 570px) {
 
 }
-@media (max-width: 767px) {
+@media (min-width: 767px) {
 
 }
-@media (max-width: 570px) {
+@media (min-width: 979px) {
 
 }
-
-@media (max-width: 240px) {	
+@media (min-width: 1024px) {
 
 }
-
+@media (min-width: 1200px) {
+	
+}
