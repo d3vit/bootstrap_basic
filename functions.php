@@ -6,6 +6,7 @@ require("lib/functions/theme-options.php");
 
 add_theme_support( 'automatic-feed-links' );
 add_theme_support( 'woocommerce' );
+add_theme_support( 'post-thumbnails' );
 
 if ( function_exists('register_sidebar') ) {
 
