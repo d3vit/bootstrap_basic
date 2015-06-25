@@ -5,7 +5,7 @@
 	//Theme Information
 	define("THEME_NAME","Bootstrap Basic");
 	define("THEME_VER","1.0");
-	define("TEMPLATEPATH", get_template_directory());
+	if (!defined("TEMPLATEPATH")) define("TEMPLATEPATH", get_template_directory());
 	
 	//Template URLs
 	define("BOOTSTRAP_LIB_DIR",TEMPLATEPATH."/lib");
