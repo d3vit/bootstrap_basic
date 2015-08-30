@@ -47,7 +47,7 @@ else
 	<div class="container">
         <div id="logo">
         	<a href="<?php home_url(); ?>">
-            	<img src="<?php bloginfo( 'template_url' ); ?>/img/" alt="" />
+            	<img src="<?php echo get_option( "logo" ); ?>" alt="" />
             </a>
         </div>
         <div id="main-navigation" class="navbar navbar-default" role="navigation">
