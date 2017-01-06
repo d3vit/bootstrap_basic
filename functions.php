@@ -1,8 +1,8 @@
 <?php
 
-require("lib/const.php");
-require("lib/admin/options/options-init.php");
-require("lib/functions/theme-options.php");
+//require("lib/const.php");
+//require("lib/admin/options/options-init.php");
+//require("lib/functions/theme-options.php");
 
 add_theme_support( 'automatic-feed-links' );
 add_theme_support( 'woocommerce' );
@@ -15,8 +15,8 @@ if ( function_exists('register_sidebar') ) {
         'id'            => 'main-sidebar',
 		'before_widget' => '<li id="%1$s" class="widget %2$s">',
 		'after_widget' => '</li>',
-		'before_title' => '',
-		'after_title' => '',
+		'before_title' => '<h3 class="widget-title">',
+		'after_title' => '</h3>',
 	));
 
 	register_sidebar(array(
@@ -24,8 +24,8 @@ if ( function_exists('register_sidebar') ) {
         'id'            => 'footer-left',
 		'before_widget' => '<div id="%1$s" class="widget %2$s">',
 		'after_widget' => '</div>',
-		'before_title' => '',
-		'after_title' => '',
+		'before_title' => '<h3 class="widget-title">',
+		'after_title' => '</h3>',
 	));
 	
 	register_sidebar(array(
@@ -33,8 +33,8 @@ if ( function_exists('register_sidebar') ) {
         'id'            => 'footer-mid',
 		'before_widget' => '<div id="%1$s" class="widget %2$s">',
 		'after_widget' => '</div>',
-		'before_title' => '',
-		'after_title' => '',
+		'before_title' => '<h3 class="widget-title">',
+		'after_title' => '</h3>',
 	));
 	
 	register_sidebar(array(
@@ -42,8 +42,8 @@ if ( function_exists('register_sidebar') ) {
         'id'            => 'footer-right',
 		'before_widget' => '<div id="%1$s" class="widget %2$s">',
 		'after_widget' => '</div>',
-		'before_title' => '',
-		'after_title' => '',
+		'before_title' => '<h3 class="widget-title">',
+		'after_title' => '</h3>',
 	));
 	
 }
@@ -61,7 +61,7 @@ function custom_scripts_loading() {
     wp_deregister_script( 'jquery' );
      
     // Register the library again from Google's CDN
-    wp_register_script( 'jquery', 'https://code.jquery.com/jquery-1.10.2.min.js', array(), null, false );
+    wp_register_script( 'jquery', 'https://code.jquery.com/jquery-1.11.2.min.js', array(), null, false );
 
     // Register custom scripts
     wp_register_script( 'bootstrap', get_template_directory_uri() . '/js/bootstrap.min.js', array( 'jquery' ) );
@@ -71,6 +71,15 @@ function custom_scripts_loading() {
 	wp_enqueue_script( 'bootstrap' );
 	wp_enqueue_script( 'custom-script' );
 
+	/*
+	 * Custom Google Fonts. Simply follow the format below.
+	 * Use pipes "|" when adding multiple fonts
+	 */
+	$query_args = array(
+		'family' => 'Open+Sans:400,400i,700'//'Open+Sans:400,700|Oswald:700'
+	);
+	wp_register_style('google_fonts', add_query_arg( $query_args, "//fonts.googleapis.com/css" ), array(), null );
+	wp_enqueue_style('google_fonts');
 }
 add_action( 'wp_enqueue_scripts', 'custom_scripts_loading' );
 

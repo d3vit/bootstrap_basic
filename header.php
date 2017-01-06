@@ -1,7 +1,7 @@
 <?php
 
 //Need to get the Theme Options
-$options = get_option('bootstrap_theme');
+//$options = get_option('bootstrap_theme');
 
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <!--[if IE]> 
@@ -20,7 +20,6 @@ $options = get_option('bootstrap_theme');
     <link rel="shortcut icon" type="image/ico" href="<?php bloginfo( 'template_url' ); ?>/favicon.ico">
     <link href="<?php bloginfo( 'template_url' ); ?>/css/bootstrap.min.css" rel="stylesheet">
     <link href="<?php bloginfo( 'template_url' ); ?>/css/bootstrap-theme.min.css" rel="stylesheet">
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="<?php bloginfo('stylesheet_url'); ?>" type="text/css" media="screen" />
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -47,7 +46,7 @@ else
 
     <div id="logo">
         <a href="/">
-            <img src="<?php echo get_option( "logo" ); ?>" alt="" />
+            <img src="<?php bloginfo( 'template_url' ); ?>/image/" alt="" />
         </a>
     </div>
     <div id="main-navigation" class="navbar navbar-default" role="navigation">
@@ -57,6 +56,7 @@ else
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
+                MENU
             </button>
         </div>
         <div class="collapse navbar-collapse" id="navbar-collapse">
