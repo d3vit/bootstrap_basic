@@ -5,8 +5,13 @@
 //require("lib/functions/theme-options.php");
 
 add_theme_support( 'automatic-feed-links' );
-add_theme_support( 'woocommerce' );
 add_theme_support( 'post-thumbnails' );
+
+//WooCommerce
+add_theme_support( 'woocommerce' );
+add_theme_support( 'wc-product-gallery-zoom' );
+add_theme_support( 'wc-product-gallery-lightbox' );
+add_theme_support( 'wc-product-gallery-slider' );
 
 if ( function_exists('register_sidebar') ) {
 
