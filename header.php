@@ -18,8 +18,8 @@
     <title><?php if (is_front_page()) : echo bloginfo( 'name' ) . ' | '; echo bloginfo( 'description'); else: wp_title(""); echo ' | '; echo bloginfo( 'name' ); endif; ?></title>
 
     <link rel="shortcut icon" type="image/ico" href="<?php bloginfo( 'template_url' ); ?>/favicon.ico">
-    <link href="<?php bloginfo( 'template_url' ); ?>/css/bootstrap.min.css" rel="stylesheet">
-    <link href="<?php bloginfo( 'template_url' ); ?>/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="<?php bloginfo( 'template_url' ); ?>/sass/vendor/bootstrap.min.css" rel="stylesheet">
+    <link href="<?php bloginfo( 'template_url' ); ?>/sass/vendor/bootstrap-theme.min.css" rel="stylesheet">
     <link rel="stylesheet" href="<?php bloginfo('stylesheet_url'); ?>" type="text/css" media="screen" />
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -30,7 +30,8 @@
         <link href="<?php bloginfo( 'template_url' ); ?>/css/ie.css" rel="stylesheet" />
     <![endif]-->
     
-    <link href="<?php bloginfo( 'template_url' ); ?>/css/media-queries.css" rel="stylesheet" />
+    <link href="<?php bloginfo( 'template_url' ); ?>/sass/theme.css" rel="stylesheet" />
+    <link href="<?php bloginfo( 'template_url' ); ?>/sass/media-queries.css" rel="stylesheet" />
     <link rel="pingback" href="<?php bloginfo('pingback_url'); ?>" />
     <?php wp_get_archives('type=monthly&format=link'); ?>
     <?php wp_head(); ?>
@@ -46,7 +47,7 @@ else
 
     <div id="logo">
         <a href="/">
-            <img src="<?php bloginfo( 'template_url' ); ?>/image/" alt="" />
+            <img src="<?php bloginfo( 'template_url' ); ?>/img/" alt="" />
         </a>
     </div>
     <div id="main-navigation" class="navbar navbar-default" role="navigation">
