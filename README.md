@@ -17,13 +17,3 @@ For more information on how to get started if you've never used Bootstrap, check
 <li>First & Last classes added to menu links</li>
 <li>Theme Options panel skeleton that can be adapted as needed</li>
 </ul>
-
-
-<h1>Usage</h1>
-
-<p>This comes ready to use out of the box. Obviously it will need some themeing help. There are a couple of things to note:</p>
-<ul>
-<li>If you intend on using the Theme Options panel, make sure that the includes to <em>lib/const.php</em>, <em>lib/admin/options/options-init.php</em> and <em>lib/functions/theme-options.php</em> all remain intact.</li>
-<li>To change any of the theme options, simply edit the sections arrays in the <em>lib/functions/theme-options.php</em> file. There should be plenty of examples to get you started.</li>
-
-</ul>
