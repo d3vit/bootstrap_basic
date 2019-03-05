@@ -101,5 +101,3 @@ add_filter('wp_nav_menu', 'add_first_and_last');
 
 register_nav_menu( 'primary', 'Primary Menu' );
 register_nav_menu( 'secondary', 'Secondary Menu' );
-
-?>
