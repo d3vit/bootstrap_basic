@@ -1,17 +1,13 @@
 <?php
 
-//require("inc/theme-options/const.php");
-//require("inc/theme-options/admin/options/options-init.php");
-//require("inc/theme-options/functions/theme-options.php");
-
 add_theme_support( 'automatic-feed-links' );
 add_theme_support( 'post-thumbnails' );
 
 //WooCommerce
-add_theme_support( 'woocommerce' );
-add_theme_support( 'wc-product-gallery-zoom' );
-add_theme_support( 'wc-product-gallery-lightbox' );
-add_theme_support( 'wc-product-gallery-slider' );
+//add_theme_support( 'woocommerce' );
+//add_theme_support( 'wc-product-gallery-zoom' );
+//add_theme_support( 'wc-product-gallery-lightbox' );
+//add_theme_support( 'wc-product-gallery-slider' );
 
 if ( function_exists('register_sidebar') ) {
 
